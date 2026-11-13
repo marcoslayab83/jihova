@@ -1,0 +1,58 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../views/**/*.blade.php';
+
+@theme {
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Syne', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    --color-jihova-bg: #0B0E17;
+    --color-jihova-surface: #121728;
+    --color-jihova-surface-2: #171E33;
+    --color-jihova-violet: #6C28FE;
+    --color-jihova-cyan: #00F0FF;
+    --color-jihova-coral: #FF3366;
+    --color-jihova-mist: #F3F4F6;
+}
+
+html {
+    color-scheme: dark;
+    background-color: #0B0E17;
+}
+
+@keyframes kenBurnsSlow {
+    0% {
+        transform: scale(1) translate3d(0, 0, 0);
+    }
+    50% {
+        transform: scale(1.08) translate3d(-1.5%, -1%, 0);
+    }
+    100% {
+        transform: scale(1) translate3d(0, 0, 0);
+    }
+}
+
+@keyframes floatSlow {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+.animate-ken-burns {
+    animation: kenBurnsSlow 18s ease-in-out infinite;
+}
+
+.animate-float-slow {
+    animation: floatSlow 5s ease-in-out infinite;
+}
+
+.jihova-gradient-text {
+    background: linear-gradient(90deg, #00F0FF 0%, #7C5CFF 52%, #6C28FE 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}

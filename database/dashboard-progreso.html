@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JIHOVA · Dashboard de Progreso</title>
+  <link rel="preconnect" href="https://fonts.bunny.net">
+  <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700,800|syne:600,700,800" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            display: ['Syne', 'Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              500: '#6C28FE',
+              600: '#6C28FE',
+              700: '#5518db',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .custom-scroll::-webkit-scrollbar { width: 6px; }
+    .custom-scroll::-webkit-scrollbar-track { background: #121728; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #6C28FE; border-radius: 4px; }
+  </style>
+</head>
+<body class="bg-[#0B0E17] text-[#F3F4F6] font-sans min-h-screen antialiased flex flex-col">
+
+  <!-- Header -->
+  <header class="border-b border-white/10 bg-[#0B0E17]/85 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="p-2 bg-[#6C28FE]/20 text-[#00F0FF] rounded-lg border border-[#00F0FF]/35">
+          <i data-lucide="store" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h1 class="font-display text-lg font-bold tracking-tight text-white flex items-center gap-2">
+            JIHOVA · El Primer Centro Comercial Online de Venezuela <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-[#00F0FF]/15 text-[#00F0FF] border border-[#00F0FF]/35">MVP + Branding Oficial</span>
+          </h1>
+          <p class="text-xs text-slate-400">Midnight Obsidian · Electric Hyper-Violet · Cyber Cyan · Neo-Coral Sunset</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Laragon + VS Code OK
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenedor Principal -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-8">
+
+    <!-- Métricas y Progreso General -->
+    <section class="space-y-4">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-sm">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+          <div>
+            <h2 class="text-xl font-bold text-white">Progreso General del Proyecto</h2>
+            <p class="text-sm text-slate-400">Control de tareas clave hacia el MVP hiperlocal.</p>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span id="progress-percent" class="text-4xl font-extrabold text-indigo-400">0%</span>
+            <span class="text-xs text-slate-500 font-medium">COMPLETADO</span>
+          </div>
+        </div>
+        
+        <!-- Barra de progreso -->
+        <div class="w-full bg-slate-800 rounded-full h-3 overflow-hidden p-0.5 border border-slate-700">
+          <div id="progress-bar" class="bg-gradient-to-r from-indigo-500 to-emerald-400 h-full rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Tarjetas KPI -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl flex items-center gap-4">
+          <div class="p-3 bg-emerald-500/10 text-emerald-400 rounded-lg border border-emerald-500/20">
+            <i data-lucide="server" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Entorno</div>
+            <div class="text-lg font-bold text-white">Laragon + Cmder</div>
+            <div class="text-xs text-emerald-400 mt-0.5">VS Code enlazado</div>
+          </div>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl flex items-center gap-4">
+          <div class="p-3 bg-indigo-500/10 text-indigo-400 rounded-lg border border-indigo-500/20">
+            <i data-lucide="database" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Base de Datos</div>
+            <div class="text-lg font-bold text-white">13 Tablas MySQL</div>
+            <div class="text-xs text-indigo-400 mt-0.5">Soporte Spatial POINT</div>
+          </div>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl flex items-center gap-4">
+          <div class="p-3 bg-amber-500/10 text-amber-400 rounded-lg border border-amber-500/20">
+            <i data-lucide="cpu" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Modelos Eloquent</div>
+            <div class="text-lg font-bold text-white">10 Clases Activas</div>
+            <div class="text-xs text-amber-400 mt-0.5">HasUuids + Casts</div>
+          </div>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl flex items-center gap-4">
+          <div class="p-3 bg-purple-500/10 text-purple-400 rounded-lg border border-purple-500/20">
+            <i data-lucide="clock" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Próximo Hito</div>
+            <div class="text-lg font-bold text-white">Seeders & GPS</div>
+            <div class="text-xs text-purple-400 mt-0.5">Datos demo hiperlocales</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hojas de Ruta y Esquema de Tablas -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <!-- Columna Izquierda: Roadmap y Tareas (2 cols) -->
+      <div class="lg:col-span-2 space-y-6">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-bold text-white flex items-center gap-2">
+            <i data-lucide="map" class="w-5 h-5 text-indigo-400"></i>
+            Hoja de Ruta de Desarrollo
+          </h3>
+          <span class="text-xs text-slate-400">Haz clic en cada casilla para guardar tu avance</span>
+        </div>
+
+        <div id="phases-container" class="space-y-4">
+          <!-- Renderizado dinámicamente con JS -->
+        </div>
+      </div>
+
+      <!-- Columna Derecha: Esquema de Tablas (1 col) -->
+      <div class="space-y-6">
+        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+          <i data-lucide="layers" class="w-5 h-5 text-indigo-400"></i>
+          Esquema de Tablas (MySQL)
+        </h3>
+
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 divide-y divide-slate-800 custom-scroll max-h-[700px] overflow-y-auto">
+          
+          <div class="py-3">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-mono text-sm font-semibold text-emerald-400">users</span>
+              <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded">Migrada</span>
+            </div>
+            <p class="text-xs text-slate-400">UUIDs, roles (customer, merchant, driver, admin).</p>
+          </div>
+
+          <div class="py-3">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-mono text-sm font-semibold text-emerald-400">customer_addresses</span>
+              <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded">Migrada</span>
+            </div>
+            <p class="text-xs text-slate-400">Coordenadas POINT SRID 4326 del cliente.</p>
+          </div>
+
+          <div class="py-3">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-mono text-sm font-semibold text-emerald-400">stores</span>
+              <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded">Migrada</span>
+            </div>
+            <p class="text-xs text-slate-400">Entidad matriz del comercio, comisión y rating.</p>
+          </div>
+
+          <div class="py-3">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-mono text-sm font-semibold text-emerald-400">store_branches</span>
+              <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded">Migrada</span>
+            </div>
+            <p class="text-xs text-slate-400">Sucursal física, ubicación POINT y radio de entrega.</p>
+          </div>
+
+          <div class="py-3">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-mono text-sm font-semibold text-emerald-400">categories</span>
+              <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded">Migrada</span>
+            </div>
+            <p class="text-xs text-slate-400">Árbol de categorías globales (comida, ropa, farmacia).</p>
+          </div>
+
+          <div class="py-3">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-mono text-sm font-semibold text-emerald-400">products</span>
+              <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded">Migrada</span>
+            </div>
+            <p class="text-xs text-slate-400">Catálogo global con soporte FullText Search.</p>
+          </div>
+
+          <div class="py-3">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-mono text-sm font-semibold text-emerald-400">branch_inventory</span>
+              <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded">Migrada</span>
+            </div>
+            <p class="text-xs text-slate-400">Stock y precios en tiempo real por sucursal.</p>
+          </div>
+
+          <div class="py-3">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-mono text-sm font-semibold text-emerald-400">orders & sub_orders</span>
+              <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded">Migrada</span>
+            </div>
+            <p class="text-xs text-slate-400">Checkout maestro desglosado en pedidos por tienda.</p>
+          </div>
+
+          <div class="py-3">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-mono text-sm font-semibold text-emerald-400">order_items</span>
+              <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded">Migrada</span>
+            </div>
+            <p class="text-xs text-slate-400">Snapshot de precio unitario y cantidad por producto.</p>
+          </div>
+
+          <div class="py-3">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-mono text-sm font-semibold text-emerald-400">driver_profiles & tracking</span>
+              <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded">Migrada</span>
+            </div>
+            <p class="text-xs text-slate-400">Telemetría GPS y eventos cronológicos de entrega.</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    // Estructura de fases y tareas
+    const roadmapData = [
+      {
+        id: "phase-1",
+        title: "Fase 1: Arquitectura y Modelado Relacional",
+        desc: "Definición conceptual y esquema relacional multi-tenant.",
+        tasks: [
+          { id: "t1-1", label: "Definición del modelo de negocio hiperlocal (< 60 min)", done: true },
+          { id: "t1-2", label: "Diseño del diagrama relacional y cardinalidades", done: true },
+          { id: "t1-3", label: "Modelado de soporte espacial (POINT) y UUIDs", done: true }
+        ]
+      },
+      {
+        id: "phase-2",
+        title: "Fase 2: Configuración de Entorno y Migraciones",
+        desc: "Puesta en marcha con Laragon, MySQL y VS Code.",
+        tasks: [
+          { id: "t2-1", label: "Instalación de Laravel 11 dentro de Laragon", done: true },
+          { id: "t2-2", label: "Integración de terminal Cmder en VS Code", done: true },
+          { id: "t2-3", label: "Configuración de credenciales de base de datos en .env", done: true },
+          { id: "t2-4", label: "Ejecución exitosa de 'php artisan migrate'", done: true }
+        ]
+      },
+      {
+        id: "phase-3",
+        title: "Fase 3: Modelos Eloquent y Relaciones",
+        desc: "Mapeo de objetos, soporte HasUuids y relaciones.",
+        tasks: [
+          { id: "t3-1", label: "Modelo User y CustomerAddress (1:N)", done: true },
+          { id: "t3-2", label: "Modelo Store y StoreBranch (1:N) con geolocalización", done: true },
+          { id: "t3-3", label: "Modelo Product y BranchInventory (N:M)", done: true },
+          { id: "t3-4", label: "Modelo Order y SubOrder con desglose por comercio", done: true }
+        ]
+      },
+      {
+        id: "phase-4",
+        title: "Fase 4: Seeders y Datos de Prueba Hiperlocales",
+        desc: "Poblar el catálogo y coordenadas reales para pruebas.",
+        tasks: [
+          { id: "t4-1", label: "Seeder de usuarios (Admin, Comerciante, Repartidor, Cliente)", done: true },
+          { id: "t4-2", label: "Seeder de tiendas y sucursales con coordenadas locales", done: true },
+          { id: "t4-3", label: "Seeder de categorías y catálogo de productos con stock", done: true }
+        ]
+      },
+      {
+        id: "phase-5",
+        title: "Fase 5: Motor de Búsqueda y Geo-Filtro (< 60 min)",
+        desc: "Consultas SQL optimizadas por proximidad y texto.",
+        tasks: [
+          { id: "t5-1", label: "Implementar cálculo de distancia y cobertura por sucursal", done: true },
+          { id: "t5-2", label: "Búsqueda global web y API agrupada por comercio", done: true },
+          { id: "t5-3", label: "Filtro de tiendas abiertas y con stock disponible", done: true }
+        ]
+      },
+      {
+        id: "phase-6",
+        title: "Fase 6: Flujo de Carrito y Checkout Multi-Tienda",
+        desc: "Procesamiento de orden maestra y subpedidos.",
+        tasks: [
+          { id: "t6-1", label: "Servicio para cálculo de comisiones y envíos múltiples", done: true },
+          { id: "t6-2", label: "Transacción atómica para dividir Order en SubOrders", done: true },
+          { id: "t6-3", label: "Simulación de pasarela de pago multi-método", done: true }
+        ]
+      },
+      {
+        id: "phase-7",
+        title: "Fase 7: Frontend Cliente y Panel de Despacho",
+        desc: "Interfaces reactivas para usuario, tiendas y repartidores.",
+        tasks: [
+          { id: "t7-1", label: "Página principal JIHOVA con buscador instantáneo y rubros", done: true },
+          { id: "t7-2", label: "Panel de recepción de órdenes para comerciantes", done: true },
+          { id: "t7-3", label: "Vista de ruta, seguimiento en vivo y panel para repartidor", done: true }
+        ]
+      }
+    ];
+
+    // Cargar estado de localStorage o usar por defecto
+    function getStoredTasks() {
+      const stored = localStorage.getItem('marketplace_tasks');
+      return stored ? JSON.parse(stored) : null;
+    }
+
+    function saveTasks(tasksState) {
+      localStorage.setItem('marketplace_tasks', JSON.stringify(tasksState));
+    }
+
+    // Inicializar datos combinando estructura con almacenamiento
+    let currentTasksState = getStoredTasks() || {};
+
+    function updateProgress() {
+      let totalTasks = 0;
+      let completedTasks = 0;
+
+      roadmapData.forEach(phase => {
+        phase.tasks.forEach(task => {
+          totalTasks++;
+          const isDone = currentTasksState[task.id] !== undefined ? currentTasksState[task.id] : task.done;
+          if (isDone) completedTasks++;
+        });
+      });
+
+      const percentage = Math.round((completedTasks / totalTasks) * 100);
+      document.getElementById('progress-percent').innerText = `${percentage}%`;
+      document.getElementById('progress-bar').style.width = `${percentage}%`;
+    }
+
+    function renderPhases() {
+      const container = document.getElementById('phases-container');
+      container.innerHTML = '';
+
+      roadmapData.forEach((phase, index) => {
+        const card = document.createElement('div');
+        card.className = "bg-slate-900 border border-slate-800 rounded-xl p-5 transition-all";
+
+        let tasksHtml = '';
+        phase.tasks.forEach(task => {
+          const isDone = currentTasksState[task.id] !== undefined ? currentTasksState[task.id] : task.done;
+          tasksHtml += `
+            <label class="flex items-start gap-3 p-2 rounded-lg hover:bg-slate-800/60 cursor-pointer transition">
+              <input type="checkbox" data-task-id="${task.id}" ${isDone ? 'checked' : ''} class="mt-1 h-4 w-4 rounded border-slate-700 text-indigo-600 focus:ring-indigo-500 bg-slate-800">
+              <span class="text-sm ${isDone ? 'line-through text-slate-500' : 'text-slate-300'}">${task.label}</span>
+            </label>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="font-semibold text-white text-base">${phase.title}</h4>
+            <span class="text-xs text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">Fase ${index + 1}</span>
+          </div>
+          <p class="text-xs text-slate-400 mb-4">${phase.desc}</p>
+          <div class="space-y-1">
+            ${tasksHtml}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      // Añadir listeners a los checkboxes
+      document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', (e) => {
+          const taskId = e.target.getAttribute('data-task-id');
+          currentTasksState[taskId] = e.target.checked;
+          saveTasks(currentTasksState);
+          renderPhases();
+          updateProgress();
+        });
+      });
+
+      lucide.createIcons();
+    }
+
+    // Inicio
+    renderPhases();
+    updateProgress();
+  </script>
+</body>
+</html>
