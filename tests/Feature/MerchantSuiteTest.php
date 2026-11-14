@@ -252,4 +252,35 @@ class MerchantSuiteTest extends TestCase
         $receiptResponse = $this->actingAs($merchant)->get(route('merchant.sales.show', $sale));
         $receiptResponse->assertOk();
     }
+
+    public function test_merchant_can_create_new_store(): void
+    {
+        $merchant = User::factory()->merchantAdmin()->create();
+        $category = Category::factory()->create();
+
+        $response = $this->actingAs($merchant)->post(route('merchant.stores.store'), [
+            'business_name' => 'Pastelería Francesa Le Bon',
+            'category_id' => $category->id,
+            'tagline' => 'Postres y café de alta pastelería',
+            'phone' => '+58 412 5556677',
+            'address' => 'Centro San Ignacio, Nivel Jardín, Local 12',
+            'delivery_radius_km' => 15.0,
+            'avg_prep_time_minutes' => 25,
+            'description' => 'Especialistas en croissants, tartas y repostería artesanal.',
+        ]);
+
+        $response->assertRedirect(route('merchant.dashboard'));
+
+        $store = Store::where('business_name', 'Pastelería Francesa Le Bon')->first();
+        $this->assertNotNull($store);
+        $this->assertSame($merchant->id, $store->owner_id);
+        $this->assertSame($category->id, $store->category_id);
+        $this->assertSame(\App\Enums\StoreStatus::Active, $store->status);
+
+        // Check primary branch created
+        $branch = StoreBranch::where('store_id', $store->id)->first();
+        $this->assertNotNull($branch);
+        $this->assertSame('Centro San Ignacio, Nivel Jardín, Local 12', $branch->address);
+        $this->assertTrue($branch->is_open);
+    }
 }

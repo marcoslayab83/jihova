@@ -15,7 +15,7 @@
                 </p>
             </div>
 
-            <!-- Accesos rápidos a tiendas -->
+            <!-- Accesos rápidos a tiendas y crear tienda -->
             <div class="flex items-center gap-2">
                 @foreach ($stores as $s)
                     <a href="{{ route('mall.stores.show', $s) }}" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#121728] hover:bg-[#1a223a] border border-white/15 text-xs font-bold text-slate-200 transition">
@@ -24,6 +24,10 @@
                         <span class="text-[10px] text-[#00F0FF]">↗</span>
                     </a>
                 @endforeach
+                <a href="#crear-tienda" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#6C28FE] to-[#00F0FF] text-white text-xs font-extrabold shadow-md shadow-[#00F0FF]/25 hover:opacity-95 transition">
+                    <span>+</span>
+                    <span>Crear Tienda</span>
+                </a>
             </div>
         </div>
 
@@ -89,6 +93,10 @@
             <a href="#finanzas" class="px-4 py-2 rounded-xl bg-[#121728] text-slate-300 hover:text-white border border-white/10 hover:border-[#00F0FF]/40 text-xs font-bold transition flex items-center gap-1.5">
                 <span>📊</span>
                 <span>Finanzas & Rentabilidad</span>
+            </a>
+            <a href="#crear-tienda" class="px-4 py-2 rounded-xl bg-gradient-to-r from-[#6C28FE]/30 to-[#00F0FF]/30 text-white hover:text-[#00F0FF] border border-[#00F0FF]/40 text-xs font-extrabold transition flex items-center gap-1.5 shadow-[0_0_15px_rgba(0,240,255,0.2)]">
+                <span>🏪</span>
+                <span>Crear Tienda</span>
             </a>
         </div>
 
@@ -878,6 +886,192 @@
                 </div>
             </div>
         </section>
+
+        <!-- SECCIÓN 6: CREAR NUEVA TIENDA & ASISTENCIA TÉCNICA -->
+        <section id="crear-tienda" class="space-y-6 pt-6 border-t border-white/10">
+            <div class="flex flex-wrap items-end justify-between gap-4">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F0FF]/15 border border-[#00F0FF]/40 text-xs font-bold text-[#00F0FF] mb-2">
+                        <span class="w-2 h-2 rounded-full bg-[#00F0FF] animate-pulse"></span>
+                        EXPANSIÓN COMERCIAL · NUEVA AFILIACIÓN
+                    </div>
+                    <h2 class="font-display text-2xl font-extrabold text-white">🏪 Crear Nueva Tienda en JIHOVA</h2>
+                    <p class="text-xs text-slate-400">
+                        Abre una nueva vitrina o marca comercial dentro del centro comercial online. Puedes registrarla tú mismo o enviar los datos al Servicio Técnico en este chat para que la configuremos de inmediato.
+                    </p>
+                </div>
+            </div>
+
+            <!-- TARJETA DESTACADA: SERVICIO TÉCNICO & ASISTENCIA EN CHAT -->
+            <div class="relative overflow-hidden rounded-3xl border border-[#00F0FF]/40 bg-gradient-to-br from-[#121728] via-[#121728]/95 to-[#1a1236] p-6 sm:p-8 shadow-[0_0_40px_rgba(0,240,255,0.15)] space-y-6">
+                <!-- Efecto resplandor de fondo -->
+                <div class="pointer-events-none absolute -top-24 -right-24 w-80 h-80 rounded-full bg-[#6C28FE]/20 blur-3xl"></div>
+                <div class="pointer-events-none absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-[#00F0FF]/15 blur-3xl"></div>
+
+                <div class="relative flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-white/10">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#6C28FE] to-[#00F0FF] flex items-center justify-center text-2xl shadow-lg shadow-[#00F0FF]/30">
+                            🤖
+                        </div>
+                        <div>
+                            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#00F0FF]/20 text-[10px] font-extrabold text-[#00F0FF] border border-[#00F0FF]/40">
+                                SOPORTE TÉCNICO DIRECTO · ASISTENTE VIRTUAL
+                            </div>
+                            <h3 class="font-display text-lg sm:text-xl font-extrabold text-white mt-1">
+                                ¿Prefieres que el Servicio Técnico configure tu tienda?
+                            </h3>
+                            <p class="text-xs text-slate-300">
+                                Si necesitas ayuda o prefieres que nuestro equipo cree la tienda, configure las categorías y cargue tus productos, sólo completa la ficha y pégala en nuestro chat de soporte.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Generador interactivo de Ficha Técnica para el Chat -->
+                <div class="relative space-y-4" data-store-brief-builder>
+                    <p class="text-xs font-bold text-slate-200">
+                        📝 Completa los datos rápidos para generar la ficha de tu tienda:
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-300 mb-1">Nombre propuesto de la tienda *</label>
+                            <input type="text" data-brief-name placeholder="Ej: Donas & Café Caracas" class="w-full px-3 py-2 rounded-xl border border-white/15 bg-[#0B0E17] text-white text-xs placeholder:text-slate-500 focus:outline-none focus:border-[#00F0FF]">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-300 mb-1">Categoría del Mall *</label>
+                            <select data-brief-category class="w-full px-3 py-2 rounded-xl border border-white/15 bg-[#0B0E17] text-white text-xs focus:outline-none focus:border-[#00F0FF]">
+                                @foreach ($categories as $cat)
+                                    <option value="{{ $cat->name }}">{{ $cat->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-300 mb-1">Ubicación / Dirección física *</label>
+                            <input type="text" data-brief-address placeholder="Ej: Av. Principal Las Mercedes, Local 4" class="w-full px-3 py-2 rounded-xl border border-white/15 bg-[#0B0E17] text-white text-xs placeholder:text-slate-500 focus:outline-none focus:border-[#00F0FF]">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-300 mb-1">WhatsApp de contacto *</label>
+                            <input type="text" data-brief-phone placeholder="Ej: +58 412 1234567" value="{{ auth()->user()->phone }}" class="w-full px-3 py-2 rounded-xl border border-white/15 bg-[#0B0E17] text-white text-xs placeholder:text-slate-500 focus:outline-none focus:border-[#00F0FF]">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-300 mb-1">Breve descripción o productos principales</label>
+                        <input type="text" data-brief-desc placeholder="Ej: Venta de café artesanal, paninis, postres fríos y servicio para llevar..." class="w-full px-3 py-2 rounded-xl border border-white/15 bg-[#0B0E17] text-white text-xs placeholder:text-slate-500 focus:outline-none focus:border-[#00F0FF]">
+                    </div>
+
+                    <!-- Botones de Acción: Copiar para el Chat vs Abrir WhatsApp -->
+                    <div class="flex flex-wrap items-center gap-3 pt-2">
+                        <button type="button" data-copy-brief-btn class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#00F0FF] to-[#6C28FE] text-white text-xs font-extrabold shadow-lg shadow-[#00F0FF]/30 hover:opacity-95 transition cursor-pointer flex items-center gap-2">
+                            <span>📋</span>
+                            <span>Copiar Ficha para este Chat de Servicio Técnico</span>
+                        </button>
+
+                        <a href="https://wa.me/?text=Hola%20Servicio%20T%C3%A9cnico%20JIHOVA%2C%20solicito%20la%20creaci%C3%B3n%20de%20una%20nueva%20tienda%20en%20el%20Mall." target="_blank" data-whatsapp-brief-btn class="px-4 py-2.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-400/40 text-emerald-300 text-xs font-bold transition flex items-center gap-2">
+                            <span>💬</span>
+                            <span>Enviar por WhatsApp a Soporte</span>
+                        </a>
+
+                        <span data-copy-status class="hidden text-xs font-bold text-[#00F0FF] animate-pulse">
+                            ✓ ¡Ficha copiada al portapapeles! Pégala en el chat para crear tu tienda.
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FORMULARIO DE AUTOGESTIÓN INMEDIATA -->
+            <div class="bg-[#121728] rounded-3xl border border-white/10 p-6 sm:p-8 shadow-xl space-y-6">
+                <div class="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-white/10">
+                    <div>
+                        <h3 class="font-display text-lg font-extrabold text-white flex items-center gap-2">
+                            <span>⚡</span>
+                            <span>Creación Directa e Inmediata (Autogestión)</span>
+                        </h3>
+                        <p class="text-xs text-slate-400 mt-0.5">
+                            Si prefieres activarla por tu cuenta ahora mismo, completa este formulario y tu tienda quedará lista para recibir pedidos.
+                        </p>
+                    </div>
+                    <span class="text-xs text-[#00F0FF] font-semibold">Activación instantánea</span>
+                </div>
+
+                <form action="{{ route('merchant.stores.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
+                    @csrf
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">Nombre Comercial de la Tienda *</label>
+                            <input type="text" name="business_name" maxlength="150" placeholder="Ej: StepUp Calzado Urbano" required class="w-full px-3 py-2.5 rounded-xl border border-white/15 bg-[#0B0E17] text-white text-xs placeholder:text-slate-500 focus:outline-none focus:border-[#00F0FF]">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">Categoría del Mall *</label>
+                            <select name="category_id" required class="w-full px-3 py-2.5 rounded-xl border border-white/15 bg-[#0B0E17] text-white text-xs focus:outline-none focus:border-[#00F0FF]">
+                                @foreach ($categories as $cat)
+                                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">Slogan o Lema Comercial</label>
+                            <input type="text" name="tagline" maxlength="255" placeholder="Ej: Calzado deportivo y formal directo a tu puerta" class="w-full px-3 py-2.5 rounded-xl border border-white/15 bg-[#0B0E17] text-white text-xs placeholder:text-slate-500 focus:outline-none focus:border-[#00F0FF]">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">Teléfono o WhatsApp Comercial *</label>
+                            <input type="text" name="phone" maxlength="50" placeholder="Ej: +58 412 9876543" value="{{ auth()->user()->phone }}" required class="w-full px-3 py-2.5 rounded-xl border border-white/15 bg-[#0B0E17] text-white text-xs placeholder:text-slate-500 focus:outline-none focus:border-[#00F0FF]">
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-bold text-slate-300 mb-1">Dirección de la Sede o Sucursal Principal *</label>
+                            <input type="text" name="address" maxlength="255" placeholder="Ej: Av. Francisco de Miranda, Centro Comercial Lido, Nivel 1" required class="w-full px-3 py-2.5 rounded-xl border border-white/15 bg-[#0B0E17] text-white text-xs placeholder:text-slate-500 focus:outline-none focus:border-[#00F0FF]">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">Radio de Cobertura Delivery (km)</label>
+                            <input type="number" name="delivery_radius_km" min="1" max="50" step="0.5" value="10" class="w-full px-3 py-2.5 rounded-xl border border-white/15 bg-[#0B0E17] text-white text-xs focus:outline-none focus:border-[#00F0FF]">
+                            <span class="text-[10px] text-slate-500">Radio máximo en kilómetros para entregas a domicilio.</span>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">Tiempo promedio de preparación (minutos)</label>
+                            <input type="number" name="avg_prep_time_minutes" min="5" max="180" value="20" class="w-full px-3 py-2.5 rounded-xl border border-white/15 bg-[#0B0E17] text-white text-xs focus:outline-none focus:border-[#00F0FF]">
+                            <span class="text-[10px] text-slate-500">Tiempo estimado desde que se acepta un pedido hasta empaque.</span>
+                        </div>
+                    </div>
+
+                    <!-- Logotipo y Banner de la Tienda -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-2xl bg-[#0B0E17]/60 border border-white/10">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-200 mb-1">Logo de la Tienda (opcional)</label>
+                            <input type="file" name="logo_file" accept="image/*" class="w-full text-xs text-slate-300 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#6C28FE] file:text-white hover:file:bg-[#7d42ff] cursor-pointer">
+                            <span class="text-[10px] text-slate-500 mt-1 block">Opcional. Si no subes logo, se generará con la insignia JIHOVA.</span>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-200 mb-1">Banner de Portada (opcional)</label>
+                            <input type="file" name="banner_file" accept="image/*" class="w-full text-xs text-slate-300 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#FF3366] file:text-white hover:file:bg-[#ff4d7a] cursor-pointer">
+                            <span class="text-[10px] text-slate-500 mt-1 block">Opcional. Se asignará una imagen de alta definición de la categoría.</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 mb-1">Descripción detallada de la tienda</label>
+                        <textarea name="description" rows="3" placeholder="Describe los productos, historia o ventajas de tu tienda para los compradores del centro comercial..." class="w-full px-3 py-2.5 rounded-xl border border-white/15 bg-[#0B0E17] text-white text-xs placeholder:text-slate-500 focus:outline-none focus:border-[#00F0FF]"></textarea>
+                    </div>
+
+                    <div class="flex justify-end pt-2">
+                        <button type="submit" class="px-7 py-3 rounded-xl bg-gradient-to-r from-[#6C28FE] via-[#FF3366] to-[#00F0FF] text-white text-xs font-extrabold shadow-lg shadow-[#00F0FF]/30 hover:opacity-95 transition cursor-pointer flex items-center gap-2">
+                            <span>🚀</span>
+                            <span>Registrar Tienda y Abrir Vitrina en JIHOVA</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
     </div>
 
     <!-- Modal: Visor de Cámara en Vivo con Escáner Neón -->
@@ -1183,6 +1377,70 @@
 
             if (closeBtn) {
                 closeBtn.addEventListener('click', stopLiveCamera);
+            }
+        })();
+
+        // Gestor de Ficha Técnica para Copiar al Chat de Soporte Técnico
+        (function () {
+            const builder = document.querySelector('[data-store-brief-builder]');
+            if (!builder) return;
+
+            const nameInput = builder.querySelector('[data-brief-name]');
+            const catSelect = builder.querySelector('[data-brief-category]');
+            const addressInput = builder.querySelector('[data-brief-address]');
+            const phoneInput = builder.querySelector('[data-brief-phone]');
+            const descInput = builder.querySelector('[data-brief-desc]');
+            const copyBtn = builder.querySelector('[data-copy-brief-btn]');
+            const waBtn = builder.querySelector('[data-whatsapp-brief-btn]');
+            const statusMsg = builder.querySelector('[data-copy-status]');
+
+            function buildBriefText() {
+                const name = nameInput.value.trim() || '[Nombre de la tienda por definir]';
+                const cat = catSelect.value || '[Categoría]';
+                const address = addressInput.value.trim() || '[Dirección o Ciudad]';
+                const phone = phoneInput.value.trim() || '[Teléfono / WhatsApp]';
+                const desc = descInput.value.trim() || '[Venta de productos generales]';
+
+                return `Hola Servicio Técnico JIHOVA, solicito la creación y configuración de una nueva tienda en el Mall:\n\n` +
+                    `🏪 *FICHA TÉCNICA DE LA TIENDA*:\n` +
+                    `• *Nombre Comercial*: ${name}\n` +
+                    `• *Categoría*: ${cat}\n` +
+                    `• *Dirección / Sede*: ${address}\n` +
+                    `• *WhatsApp / Contacto*: ${phone}\n` +
+                    `• *Productos / Descripción*: ${desc}\n\n` +
+                    `¡Por favor confírmenme para comenzar a cargar el inventario y fotos!`;
+            }
+
+            function updateWhatsAppLink() {
+                if (waBtn) {
+                    const text = buildBriefText();
+                    waBtn.href = `https://wa.me/?text=${encodeURIComponent(text)}`;
+                }
+            }
+
+            [nameInput, catSelect, addressInput, phoneInput, descInput].forEach(el => {
+                if (el) el.addEventListener('input', updateWhatsAppLink);
+            });
+
+            if (copyBtn) {
+                copyBtn.addEventListener('click', async function () {
+                    const text = buildBriefText();
+                    try {
+                        await navigator.clipboard.writeText(text);
+                    } catch (e) {
+                        const ta = document.createElement('textarea');
+                        ta.value = text;
+                        document.body.appendChild(ta);
+                        ta.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(ta);
+                    }
+
+                    if (statusMsg) {
+                        statusMsg.classList.remove('hidden');
+                        setTimeout(() => statusMsg.classList.add('hidden'), 5000);
+                    }
+                });
             }
         })();
     </script>

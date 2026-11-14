@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\StoreStatus;
 use App\Enums\SubOrderStatus;
 use App\Models\BranchInventory;
 use App\Models\Category;
@@ -17,6 +18,7 @@ use App\Models\SubOrder;
 use App\Models\User;
 use App\Services\AiImageEnhancerService;
 use App\Services\DeliveryDispatchService;
+use App\Services\GeoLocationService;
 use App\Services\StoreSaleService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -343,6 +345,96 @@ class MerchantDashboardController extends Controller
         });
 
         return back()->with('status', "Precio actualizado para {$product->name} en todas sus sucursales.");
+    }
+
+    public function storeStore(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'business_name' => ['required', 'string', 'max:150'],
+            'category_id' => ['required', 'uuid', 'exists:categories,id'],
+            'tagline' => ['nullable', 'string', 'max:255'],
+            'description' => ['nullable', 'string', 'max:1000'],
+            'phone' => ['nullable', 'string', 'max:50'],
+            'address' => ['required', 'string', 'max:255'],
+            'delivery_radius_km' => ['nullable', 'numeric', 'min:1', 'max:50'],
+            'avg_prep_time_minutes' => ['nullable', 'integer', 'min:5', 'max:180'],
+            'logo_file' => ['nullable', 'image', 'max:5120'],
+            'logo_url' => ['nullable', 'string', 'max:500'],
+            'banner_file' => ['nullable', 'image', 'max:5120'],
+            'banner_url' => ['nullable', 'string', 'max:500'],
+        ]);
+
+        $category = Category::query()->findOrFail($validated['category_id']);
+
+        $categoryBanners = [
+            'desayunos-cafe' => '/images/catalog/desayuno.jpg',
+            'calzado-moda' => '/images/catalog/tenis.jpg',
+            'tecnologia' => '/images/catalog/tecnologia.jpg',
+            'farmacia-salud' => '/images/catalog/farmacia.jpg',
+            'supermercado-hogar' => '/images/catalog/supermercado.jpg',
+        ];
+
+        $bannerUrl = $categoryBanners[$category->slug] ?? '/images/catalog/hero-mall.jpg';
+        $logoUrl = null;
+
+        if ($request->hasFile('banner_file')) {
+            $file = $request->file('banner_file');
+            $uploadDir = public_path('uploads/stores');
+            if (! File::isDirectory($uploadDir)) {
+                File::makeDirectory($uploadDir, 0755, true, true);
+            }
+            $filename = 'banner_'.Str::lower(Str::random(12)).'.'.$file->getClientOriginalExtension();
+            $file->move($uploadDir, $filename);
+            $bannerUrl = '/uploads/stores/'.$filename;
+        } elseif (! empty($validated['banner_url'])) {
+            $bannerUrl = $validated['banner_url'];
+        }
+
+        if ($request->hasFile('logo_file')) {
+            $file = $request->file('logo_file');
+            $uploadDir = public_path('uploads/stores');
+            if (! File::isDirectory($uploadDir)) {
+                File::makeDirectory($uploadDir, 0755, true, true);
+            }
+            $filename = 'logo_'.Str::lower(Str::random(12)).'.'.$file->getClientOriginalExtension();
+            $file->move($uploadDir, $filename);
+            $logoUrl = '/uploads/stores/'.$filename;
+        } elseif (! empty($validated['logo_url'])) {
+            $logoUrl = $validated['logo_url'];
+        }
+
+        $store = DB::transaction(function () use ($validated, $category, $bannerUrl, $logoUrl, $request): Store {
+            $store = Store::create([
+                'owner_id' => $request->user()->id,
+                'category_id' => $category->id,
+                'business_name' => $validated['business_name'],
+                'slug' => Str::slug($validated['business_name']).'-'.Str::lower(Str::random(4)),
+                'tagline' => $validated['tagline'] ?? "Tu tienda de {$category->name} en JIHOVA",
+                'description' => $validated['description'] ?? null,
+                'logo_url' => $logoUrl,
+                'banner_url' => $bannerUrl,
+                'phone' => $validated['phone'] ?? $request->user()->phone,
+                'status' => StoreStatus::Active,
+                'commission_rate' => 10.00,
+                'rating' => 5.0,
+            ]);
+
+            StoreBranch::create([
+                'store_id' => $store->id,
+                'branch_name' => $store->business_name.' · Sede Principal',
+                'address' => $validated['address'],
+                'latitude' => GeoLocationService::DEFAULT_LAT,
+                'longitude' => GeoLocationService::DEFAULT_LNG,
+                'delivery_radius_km' => $validated['delivery_radius_km'] ?? 10.00,
+                'base_delivery_fee' => 2.50,
+                'avg_prep_time_minutes' => $validated['avg_prep_time_minutes'] ?? 20,
+                'is_open' => true,
+            ]);
+
+            return $store;
+        });
+
+        return redirect()->route('merchant.dashboard')->with('status', "¡Tienda '{$store->business_name}' creada y afiliada con éxito! Ya puedes cargar su inventario con fotos.");
     }
 
     public function storeProduct(Request $request): RedirectResponse

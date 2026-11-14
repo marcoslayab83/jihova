@@ -86,6 +86,9 @@ Route::middleware(['auth', 'role:merchant_admin,merchant_staff,platform_admin'])
         Route::patch('/publicidad/{adBanner}/estado', [MerchantDashboardController::class, 'toggleAdBanner'])->name('ads.toggle');
         Route::delete('/publicidad/{adBanner}', [MerchantDashboardController::class, 'destroyAdBanner'])->name('ads.destroy');
 
+        // Registro de Nueva Tienda / Sucursal
+        Route::post('/tiendas', [MerchantDashboardController::class, 'storeStore'])->name('stores.store');
+
         // Registro de Ventas (Punto de Venta / POS / Mostrador)
         Route::post('/ventas', [MerchantDashboardController::class, 'storeSale'])->name('sales.store');
         Route::get('/ventas/{sale}', [MerchantDashboardController::class, 'showSale'])->name('sales.show');
