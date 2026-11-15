@@ -39,8 +39,12 @@
 
         <div class="absolute bottom-3 left-4 right-4 flex items-end justify-between gap-3">
             <div class="flex items-center gap-3 min-w-0">
-                <div class="w-11 h-11 rounded-2xl text-white font-display font-bold text-lg flex items-center justify-center shadow-lg ring-2 ring-white/25 shrink-0" style="background-color: {{ $store->accent_color ?? '#6C28FE' }};">
-                    {{ mb_substr($store->business_name, 0, 1) }}
+                <div class="w-11 h-11 rounded-2xl text-white font-display font-bold text-lg flex items-center justify-center shadow-lg ring-2 ring-white/25 shrink-0 overflow-hidden bg-[#121728]" style="background-color: {{ $store->accent_color ?? '#6C28FE' }};">
+                    @if ($store->logo_url)
+                        <img src="{{ $store->logo_url }}" alt="{{ $store->business_name }}" class="w-full h-full object-cover">
+                    @else
+                        {{ mb_substr($store->business_name, 0, 1) }}
+                    @endif
                 </div>
                 <div class="min-w-0">
                     <h3 class="font-display font-bold text-white text-base truncate group-hover:text-[#00F0FF] transition">
