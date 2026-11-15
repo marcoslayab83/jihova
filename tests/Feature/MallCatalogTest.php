@@ -124,4 +124,20 @@ class MallCatalogTest extends TestCase
         $this->actingAs($driver)->get('/panel-repartidor')->assertOk()->assertSee('CC-DEMO-1001-T2');
         $this->actingAs($admin)->get('/panel-admin')->assertOk()->assertSee('JIHOVA');
     }
+
+    public function test_cuadrados_food_store_and_catalog_are_seeded_and_visible(): void
+    {
+        $this->seed();
+
+        $this->get('/tiendas/cuadrados-food')
+            ->assertOk()
+            ->assertSee('CUADRADOS FOOD')
+            ->assertSee('Pastelito de Carne Mechada')
+            ->assertSee('Combo Dúo Cuadrados')
+            ->assertSee('Malta Polar');
+
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('CUADRADOS FOOD');
+    }
 }

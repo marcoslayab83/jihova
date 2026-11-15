@@ -740,5 +740,7 @@ class DatabaseSeeder extends Seeder
             'longitude' => (float) $stepUpBranch->longitude,
             'notes' => 'Zapatos verificados y sellados en mostrador, esperando repartidor.',
         ]);
+
+        $this->call(CuadradosFoodSeeder::class);
     }
 }
