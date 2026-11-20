@@ -17,10 +17,21 @@
             </span>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
             <!-- Sidebar Filtros -->
             <aside class="lg:col-span-3">
-                <form action="{{ route('mall.explore') }}" method="GET" class="bg-[#121728]/95 backdrop-blur-md rounded-3xl border border-white/10 p-5 space-y-5 sticky top-24 shadow-xl">
+                <details class="bg-[#121728]/95 backdrop-blur-md rounded-3xl border border-white/10 p-4 sm:p-5 sticky top-24 shadow-xl group" open>
+                    <summary class="lg:hidden flex items-center justify-between font-bold text-xs text-white cursor-pointer select-none pb-2 border-b border-white/10">
+                        <span class="flex items-center gap-2 text-[#00F0FF]">
+                            <span>⚙️</span>
+                            <span>Filtros y Búsqueda</span>
+                            @if ($filters['q'] || $filters['category'] || $filters['max_price'])
+                                <span class="px-2 py-0.5 rounded-full bg-[#FF3366] text-white text-[10px]">Activos</span>
+                            @endif
+                        </span>
+                        <span class="text-xs text-slate-400 group-open:rotate-180 transition-transform">▼</span>
+                    </summary>
+                    <form action="{{ route('mall.explore') }}" method="GET" class="pt-3 lg:pt-0 space-y-4 sm:space-y-5">
                     <div class="space-y-1.5">
                         <label class="text-xs font-bold uppercase tracking-wider text-slate-300">Búsqueda</label>
                         <input
@@ -77,15 +88,16 @@
                         </label>
                     </div>
 
-                    <div class="flex gap-2">
-                        <button type="submit" class="flex-1 py-2.5 rounded-xl bg-[#FF3366] hover:bg-[#ff4d7a] text-white text-sm font-bold shadow-md shadow-[#FF3366]/25 transition cursor-pointer">
-                            Aplicar filtros
-                        </button>
-                        <a href="{{ route('mall.explore') }}" class="px-3.5 py-2.5 rounded-xl border border-white/15 bg-white/5 text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/10">
-                            Limpiar
-                        </a>
-                    </div>
-                </form>
+                        <div class="flex gap-2">
+                            <button type="submit" class="flex-1 py-2.5 rounded-xl bg-[#FF3366] hover:bg-[#ff4d7a] text-white text-sm font-bold shadow-md shadow-[#FF3366]/25 transition cursor-pointer">
+                                Aplicar filtros
+                            </button>
+                            <a href="{{ route('mall.explore') }}" class="px-3.5 py-2.5 rounded-xl border border-white/15 bg-white/5 text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/10">
+                                Limpiar
+                            </a>
+                        </div>
+                    </form>
+                </details>
             </aside>
 
             <!-- Resultados -->
@@ -93,7 +105,7 @@
                 @if ($stores->isNotEmpty())
                     <div class="space-y-3">
                         <h2 class="font-display text-lg font-bold text-white">Tiendas coincidentes</h2>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                        <div class="flex overflow-x-auto gap-3.5 no-scrollbar pb-2 sm:grid sm:grid-cols-2 xl:grid-cols-3 sm:gap-4">
                             @foreach ($stores->take(6) as $storeItem)
                                 <x-store-card :item="$storeItem" />
                             @endforeach
@@ -114,7 +126,7 @@
                             </a>
                         </div>
                     @else
-                        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+                        <div class="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-5">
                             @foreach ($offers as $offer)
                                 <x-product-card :offer="$offer" />
                             @endforeach

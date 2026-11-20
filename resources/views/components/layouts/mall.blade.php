@@ -5,7 +5,7 @@
 <html lang="es" class="dark">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#0B0E17">
     <title>{{ $title }}</title>
@@ -38,10 +38,13 @@
                 background-clip: text;
                 color: transparent;
             }
+            .no-scrollbar::-webkit-scrollbar { display: none; }
+            .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+            .pb-safe { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 5.5rem); }
         </style>
     @endif
 </head>
-<body class="bg-[#0B0E17] text-[#F3F4F6] min-h-screen flex flex-col antialiased selection:bg-[#FF3366] selection:text-white pb-20 md:pb-0 relative overflow-x-hidden">
+<body class="bg-[#0B0E17] text-[#F3F4F6] min-h-screen flex flex-col antialiased selection:bg-[#FF3366] selection:text-white pb-24 md:pb-0 relative overflow-x-hidden">
 
     <!-- Atmósfera Lumínica JIHOVA -->
     <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
@@ -55,7 +58,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="h-18 flex items-center justify-between gap-4 py-2.5">
                 <!-- Logo y Ubicación -->
-                <div class="flex items-center gap-4 min-w-0">
+                <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
                     <a href="{{ route('mall.home') }}" class="flex items-center shrink-0 group transition hover:opacity-95">
                         <x-brand-logo size="md" subtitle="El Centro Comercial Online" class="hidden sm:inline-flex" />
                         <x-brand-logo size="sm" :show-text="true" class="sm:hidden" />
@@ -65,6 +68,12 @@
                         <span class="text-[#00F0FF] shrink-0">📍</span>
                         <span class="truncate">{{ $sharedLocation['label'] ?? 'Seleccionar ubicación' }}</span>
                         <span class="text-slate-400">▾</span>
+                    </button>
+
+                    <button type="button" data-open-location-modal class="flex md:hidden items-center gap-1 px-2.5 py-1 rounded-full bg-[#121728] border border-white/15 text-[11px] font-medium text-slate-200 transition max-w-[140px] cursor-pointer">
+                        <span class="text-[#00F0FF] shrink-0 text-xs">📍</span>
+                        <span class="truncate">{{ $sharedLocation['label'] ?? 'Ubicación' }}</span>
+                        <span class="text-slate-400 text-[9px]">▾</span>
                     </button>
                 </div>
 
@@ -247,26 +256,31 @@
         </div>
     </footer>
 
-    <!-- Barra Inferior App Móvil -->
-    <nav class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-[#0E1322]/95 backdrop-blur-xl border-t border-white/10 px-3 py-2 flex items-center justify-around text-[11px] font-semibold text-slate-300">
-        <a href="{{ route('mall.home') }}" class="flex flex-col items-center gap-0.5 {{ request()->routeIs('mall.home') ? 'text-[#00F0FF]' : '' }}">
+    <!-- Barra Inferior App Móvil (Estilo Dock Flotante con Glassmorphism) -->
+    <nav class="md:hidden fixed bottom-2.5 inset-x-3 z-40 bg-[#0E1322]/90 backdrop-blur-2xl border border-white/15 rounded-3xl px-1.5 py-1.5 shadow-[0_14px_40px_rgba(0,0,0,0.85)] flex items-center justify-around text-[10px] font-bold text-slate-300">
+        <a href="{{ route('mall.home') }}" class="flex flex-col items-center gap-0.5 px-2.5 py-1 rounded-2xl transition {{ request()->routeIs('mall.home') ? 'text-[#00F0FF] bg-[#00F0FF]/15' : 'hover:text-white' }}">
             <span class="text-base">🏠</span>
             <span>Inicio</span>
         </a>
-        <a href="{{ route('mall.explore') }}" class="flex flex-col items-center gap-0.5 {{ request()->routeIs('mall.explore') ? 'text-[#00F0FF]' : '' }}">
-            <span class="text-base">🔎</span>
+        <a href="{{ route('mall.explore') }}" class="flex flex-col items-center gap-0.5 px-2.5 py-1 rounded-2xl transition {{ request()->routeIs('mall.explore') ? 'text-[#00F0FF] bg-[#00F0FF]/15' : 'hover:text-white' }}">
+            <span class="text-base">🧭</span>
             <span>Explorar</span>
         </a>
-        <a href="{{ route('mall.stores') }}" class="flex flex-col items-center gap-0.5 {{ request()->routeIs('mall.stores*') ? 'text-[#00F0FF]' : '' }}">
+        <a href="{{ route('mall.stores') }}" class="flex flex-col items-center gap-0.5 px-2.5 py-1 rounded-2xl transition {{ request()->routeIs('mall.stores*') ? 'text-[#00F0FF] bg-[#00F0FF]/15' : 'hover:text-white' }}">
             <span class="text-base">🏬</span>
             <span>Tiendas</span>
         </a>
-        <a href="{{ auth()->check() ? route('orders.index') : route('login') }}" class="flex flex-col items-center gap-0.5 {{ request()->routeIs('orders.*') ? 'text-[#00F0FF]' : '' }}">
+        <a href="{{ auth()->check() ? route('orders.index') : route('login') }}" class="flex flex-col items-center gap-0.5 px-2.5 py-1 rounded-2xl transition {{ request()->routeIs('orders.*') ? 'text-[#00F0FF] bg-[#00F0FF]/15' : 'hover:text-white' }}">
             <span class="text-base">📦</span>
-            <span>{{ auth()->check() ? 'Pedidos' : 'Ingresar' }}</span>
+            <span>{{ auth()->check() ? 'Pedidos' : 'Cuenta' }}</span>
         </a>
-        <button type="button" data-open-cart class="relative flex flex-col items-center gap-0.5 text-[#FF3366] cursor-pointer">
-            <span class="text-base">🛒</span>
+        <button type="button" data-open-cart class="relative flex flex-col items-center gap-0.5 px-2.5 py-1 rounded-2xl text-[#FF3366] hover:bg-[#FF3366]/15 transition cursor-pointer">
+            <span class="text-base relative">
+                🛒
+                <span data-cart-badge class="absolute -top-1 -right-2 px-1.5 py-0.2 rounded-full bg-[#FF3366] text-white text-[9px] font-extrabold leading-tight shadow-sm {{ ($sharedCartCount ?? 0) > 0 ? '' : 'hidden' }}">
+                    {{ $sharedCartCount ?? 0 }}
+                </span>
+            </span>
             <span>Carrito</span>
         </button>
     </nav>

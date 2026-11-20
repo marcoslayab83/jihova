@@ -57,28 +57,28 @@
 
                             <div class="divide-y divide-white/10">
                                 @foreach ($group['items'] as $item)
-                                    <div class="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                                        <div class="flex items-center gap-4 min-w-0">
-                                            <img src="{{ $item['product']->image_url ?? '/images/catalog/moda.jpg' }}" alt="{{ $item['product']->name }}" class="w-16 h-16 rounded-2xl object-cover bg-[#171E33] border border-white/10 shrink-0">
+                                    <div class="p-3.5 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+                                        <div class="flex items-center gap-3 sm:gap-4 min-w-0">
+                                            <img src="{{ $item['product']->image_url ?? '/images/catalog/moda.jpg' }}" alt="{{ $item['product']->name }}" class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl object-cover bg-[#171E33] border border-white/10 shrink-0">
                                             <div class="min-w-0">
-                                                <a href="{{ route('mall.products.show', [$group['store'], $item['product']]) }}" class="font-bold text-white hover:text-[#00F0FF] block truncate transition">
+                                                <a href="{{ route('mall.products.show', [$group['store'], $item['product']]) }}" class="font-bold text-white hover:text-[#00F0FF] block truncate text-sm sm:text-base transition">
                                                     {{ $item['product']->name }}
                                                 </a>
                                                 <p class="text-xs text-slate-400">${{ number_format($item['unit_price'], 2) }} por unidad</p>
                                             </div>
                                         </div>
 
-                                        <div class="flex items-center justify-between sm:justify-end gap-4">
+                                        <div class="flex items-center justify-between sm:justify-end gap-2 sm:gap-4 pt-2 sm:pt-0 border-t border-white/5 sm:border-0">
                                             <form action="{{ route('cart.update', [$group['branch']->id, $item['product']->id]) }}" method="POST" class="flex items-center gap-1.5">
                                                 @csrf
                                                 @method('PATCH')
-                                                <input type="number" name="quantity" value="{{ $item['quantity'] }}" min="0" max="50" class="w-16 px-2 py-1.5 rounded-xl border border-white/15 bg-[#0B0E17] text-white text-center text-sm font-bold focus:outline-none focus:border-[#00F0FF]">
-                                                <button type="submit" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-semibold text-white cursor-pointer transition">
+                                                <input type="number" name="quantity" value="{{ $item['quantity'] }}" min="0" max="50" class="w-14 sm:w-16 px-2 py-1 sm:py-1.5 rounded-xl border border-white/15 bg-[#0B0E17] text-white text-center text-xs sm:text-sm font-bold focus:outline-none focus:border-[#00F0FF]">
+                                                <button type="submit" class="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-semibold text-white cursor-pointer transition">
                                                     Actualizar
                                                 </button>
                                             </form>
 
-                                            <span class="font-extrabold text-white w-20 text-right">${{ number_format($item['total_price'], 2) }}</span>
+                                            <span class="font-extrabold text-white text-sm sm:text-base min-w-[70px] text-right">${{ number_format($item['total_price'], 2) }}</span>
 
                                             <form action="{{ route('cart.remove', [$group['branch']->id, $item['product']->id]) }}" method="POST">
                                                 @csrf

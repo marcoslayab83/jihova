@@ -16,8 +16,8 @@
     $coverUrl = $store->banner_url ?? ($coverMap[$store->category?->slug] ?? '/images/catalog/hero-mall.jpg');
 @endphp
 
-<a href="{{ route('mall.stores.show', $store) }}" class="group block bg-[#121728]/95 backdrop-blur-md rounded-3xl border border-white/10 overflow-hidden shadow-lg hover:shadow-[0_18px_42px_-16px_rgba(108,40,254,0.45)] hover:-translate-y-1 hover:border-[#6C28FE]/70 transition-all duration-300">
-    <div class="h-36 relative overflow-hidden">
+<a href="{{ route('mall.stores.show', $store) }}" class="group block w-full min-w-[260px] sm:min-w-0 shrink-0 sm:shrink bg-[#121728]/95 backdrop-blur-md rounded-2xl sm:rounded-3xl border border-white/10 overflow-hidden shadow-lg hover:shadow-[0_18px_42px_-16px_rgba(108,40,254,0.45)] hover:-translate-y-1 hover:border-[#6C28FE]/70 transition-all duration-300">
+    <div class="h-32 sm:h-36 relative overflow-hidden">
         <img
             src="{{ $coverUrl }}"
             alt="{{ $store->business_name }}"

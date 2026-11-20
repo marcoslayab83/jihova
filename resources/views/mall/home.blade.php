@@ -193,17 +193,17 @@
         </div>
     </section>
 
-    <!-- Rubros / Categorías Visuales -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 space-y-5">
+    <!-- Rubros / Categorías Visuales (Swipe Horizontal en Móvil como en el Mockup) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 space-y-4 sm:space-y-5">
         <div class="flex items-end justify-between gap-4">
             <div>
-                <p class="text-xs font-bold uppercase tracking-wider text-[#00F0FF]">Departamentos del Mall</p>
-                <h2 class="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">Explora por categoría</h2>
+                <p class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#00F0FF]">Departamentos del Mall</p>
+                <h2 class="font-display text-xl sm:text-3xl font-bold text-white tracking-tight">Explora por categoría</h2>
             </div>
-            <a href="{{ route('mall.explore') }}" class="text-sm font-bold text-[#00F0FF] hover:text-white transition">Ver catálogo completo →</a>
+            <a href="{{ route('mall.explore') }}" class="text-xs sm:text-sm font-bold text-[#00F0FF] hover:text-white transition">Ver catálogo →</a>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div class="flex overflow-x-auto gap-3 pb-2 no-scrollbar px-0.5 sm:grid sm:grid-cols-3 lg:grid-cols-5">
             @php
                 $categoryPhotos = [
                     'desayunos-cafe' => ['/images/catalog/desayuno.jpg', '☕'],
@@ -217,64 +217,70 @@
                 @php
                     $meta = $categoryPhotos[$category->slug] ?? ['/images/catalog/hero-mall.jpg', '✨'];
                 @endphp
-                <a href="{{ route('mall.explore', ['category' => $category->slug]) }}" class="group bg-[#121728]/90 rounded-3xl border border-white/10 p-3 hover:border-[#00F0FF]/60 hover:shadow-[0_14px_34px_-14px_rgba(0,240,255,0.3)] hover:-translate-y-1 transition-all duration-300 flex flex-col gap-3">
-                    <div class="aspect-[16/10] rounded-2xl overflow-hidden bg-[#171E33] relative border border-white/10">
+                <a href="{{ route('mall.explore', ['category' => $category->slug]) }}" class="group min-w-[130px] sm:min-w-0 shrink-0 sm:shrink bg-[#121728]/90 rounded-2xl sm:rounded-3xl border border-white/10 p-2 sm:p-3 hover:border-[#00F0FF]/60 hover:shadow-[0_14px_34px_-14px_rgba(0,240,255,0.3)] hover:-translate-y-1 transition-all duration-300 flex flex-col gap-2 sm:gap-3">
+                    <div class="aspect-[16/10] rounded-xl sm:rounded-2xl overflow-hidden bg-[#171E33] relative border border-white/10">
                         <img
                             src="{{ $meta[0] }}"
                             alt="{{ $category->name }}"
                             class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
                         >
                         <div class="absolute inset-0 bg-gradient-to-t from-[#0B0E17]/75 to-transparent"></div>
-                        <span class="absolute bottom-2 left-2 w-8 h-8 rounded-xl bg-[#0B0E17]/80 backdrop-blur border border-[#00F0FF]/40 flex items-center justify-center text-sm">
+                        <span class="absolute bottom-1.5 left-1.5 sm:bottom-2 sm:left-2 w-6 h-6 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-[#0B0E17]/80 backdrop-blur border border-[#00F0FF]/40 flex items-center justify-center text-xs sm:text-sm">
                             {{ $meta[1] }}
                         </span>
                     </div>
                     <div class="px-1 pb-1">
-                        <h3 class="font-display font-bold text-sm text-white group-hover:text-[#00F0FF] transition">{{ $category->name }}</h3>
-                        <p class="text-xs text-slate-400 line-clamp-2 mt-0.5">{{ $category->description }}</p>
+                        <h3 class="font-display font-bold text-xs sm:text-sm text-white group-hover:text-[#00F0FF] transition truncate">{{ $category->name }}</h3>
+                        <p class="hidden sm:block text-xs text-slate-400 line-clamp-2 mt-0.5">{{ $category->description }}</p>
                     </div>
                 </a>
             @endforeach
         </div>
+
+        <!-- Botón Comprar Ahora Destacado para Móvil (Fiel al Mockup) -->
+        <div class="pt-1 sm:hidden">
+            <a href="{{ route('mall.explore') }}" class="w-full block py-3 rounded-2xl bg-[#FF3366] hover:bg-[#ff4d7a] text-center font-bold text-sm text-white shadow-lg shadow-[#FF3366]/30 transition">
+                Comprar Ahora →
+            </a>
+        </div>
     </section>
 
-    <!-- Vitrinas & Anuncios Patrocinados -->
+    <!-- Vitrinas & Anuncios Patrocinados (Swipe Horizontal en Móvil) -->
     @if ($vitrinaAdBanners->isNotEmpty())
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 space-y-6">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 space-y-4 sm:space-y-6">
             <div class="flex flex-wrap items-end justify-between gap-4">
                 <div>
                     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6C28FE]/20 border border-[#6C28FE]/40 text-xs font-bold text-[#6C28FE] mb-1">
                         <span class="w-1.5 h-1.5 rounded-full bg-[#00F0FF] animate-pulse"></span>
                         Vitrinas Comerciales JIHOVA
                     </div>
-                    <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Vitrinas & Anuncios Patrocinados</h2>
-                    <p class="text-xs sm:text-sm text-slate-400">Espacios de exhibición destacados impulsados por nuestros comerciantes.</p>
+                    <h2 class="font-display text-xl sm:text-3xl font-extrabold text-white tracking-tight">Vitrinas & Anuncios</h2>
                 </div>
-                <span class="text-xs text-slate-400 font-medium">Publicidad certificada</span>
+                <span class="text-xs text-slate-400 font-medium hidden sm:inline">Publicidad certificada</span>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="flex overflow-x-auto gap-4 no-scrollbar pb-2 sm:grid sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($vitrinaAdBanners as $ad)
-                    <article class="group relative rounded-3xl bg-[#121728]/95 border border-[#6C28FE]/40 overflow-hidden shadow-[0_16px_40px_-16px_rgba(108,40,254,0.45)] hover:border-[#00F0FF]/60 hover:shadow-[0_20px_50px_-16px_rgba(0,240,255,0.4)] transition-all duration-300 flex flex-col">
+                    <article class="group relative min-w-[280px] sm:min-w-0 shrink-0 sm:shrink rounded-2xl sm:rounded-3xl bg-[#121728]/95 border border-[#6C28FE]/40 overflow-hidden shadow-[0_16px_40px_-16px_rgba(108,40,254,0.45)] hover:border-[#00F0FF]/60 hover:shadow-[0_20px_50px_-16px_rgba(0,240,255,0.4)] transition-all duration-300 flex flex-col">
                         <div class="relative aspect-[16/9] w-full overflow-hidden bg-[#0B0E17]">
                             <img src="{{ $ad->image_url }}" alt="{{ $ad->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <div class="absolute inset-0 bg-gradient-to-t from-[#121728] via-transparent to-transparent"></div>
-                            <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#0B0E17]/80 backdrop-blur border border-[#00F0FF]/50 text-[11px] font-bold text-[#00F0FF]">
-                                ✦ Patrocinado · {{ $ad->store->business_name }}
+                            <span class="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-[#0B0E17]/80 backdrop-blur border border-[#00F0FF]/50 text-[10px] sm:text-[11px] font-bold text-[#00F0FF]">
+                                ✦ {{ $ad->store->business_name }}
                             </span>
                         </div>
-                        <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3 sm:space-y-4">
                             <div>
-                                <h3 class="font-display text-lg font-bold text-white group-hover:text-[#00F0FF] transition leading-snug">
+                                <h3 class="font-display text-sm sm:text-lg font-bold text-white group-hover:text-[#00F0FF] transition leading-snug line-clamp-2">
                                     {{ $ad->title }}
                                 </h3>
                                 @if ($ad->subtitle)
-                                    <p class="text-xs text-slate-300 mt-1 leading-relaxed">{{ $ad->subtitle }}</p>
+                                    <p class="text-xs text-slate-300 mt-1 line-clamp-2">{{ $ad->subtitle }}</p>
                                 @endif
                             </div>
                             <div class="pt-2 flex items-center justify-between border-t border-white/10">
-                                <span class="text-xs text-slate-400">{{ $ad->product ? '$' . number_format((float) $ad->product->base_price, 2) : 'Tienda Oficial' }}</span>
-                                <a href="{{ route('mall.ads.click', $ad) }}" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-[#6C28FE] to-[#FF3366] text-white text-xs font-extrabold shadow-md hover:opacity-95 transition">
+                                <span class="text-xs font-semibold text-slate-300">{{ $ad->product ? '$' . number_format((float) $ad->product->base_price, 2) : 'Tienda Oficial' }}</span>
+                                <a href="{{ route('mall.ads.click', $ad) }}" class="inline-flex items-center gap-1 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-gradient-to-r from-[#6C28FE] to-[#FF3366] text-white text-[11px] sm:text-xs font-extrabold shadow-md hover:opacity-95 transition">
                                     {{ $ad->cta_text ?? 'Ver Oferta' }} →
                                 </a>
                             </div>
@@ -285,17 +291,17 @@
         </section>
     @endif
 
-    <!-- Tiendas del Centro Comercial -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 space-y-5">
+    <!-- Tiendas del Centro Comercial (Scroll Horizontal en Móvil) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 space-y-4 sm:space-y-5">
         <div class="flex items-end justify-between gap-4">
             <div>
-                <p class="text-xs font-bold uppercase tracking-wider text-[#6C28FE]">Tiendas Verificadas</p>
-                <h2 class="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">Locales abiertos en JIHOVA</h2>
+                <p class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#6C28FE]">Tiendas Verificadas</p>
+                <h2 class="font-display text-xl sm:text-3xl font-bold text-white tracking-tight">Locales abiertos</h2>
             </div>
-            <a href="{{ route('mall.stores') }}" class="text-sm font-bold text-[#00F0FF] hover:text-white transition">Directorio completo →</a>
+            <a href="{{ route('mall.stores') }}" class="text-xs sm:text-sm font-bold text-[#00F0FF] hover:text-white transition">Directorio completo →</a>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <div class="flex overflow-x-auto gap-3.5 no-scrollbar pb-3 sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             @foreach ($stores->take(8) as $storeItem)
                 <x-store-card :item="$storeItem" />
             @endforeach
@@ -365,7 +371,7 @@
             <a href="{{ route('mall.explore') }}" class="text-sm font-bold text-[#00F0FF] hover:text-white transition">Explorar todo →</a>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
             @foreach ($featuredOffers as $offer)
                 <x-product-card :offer="$offer" />
             @endforeach
