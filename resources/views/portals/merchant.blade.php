@@ -561,6 +561,12 @@
                     <h2 class="font-display text-2xl font-extrabold text-white">🛒 Punto de Venta (POS) & Registro de Ventas</h2>
                     <p class="text-xs text-slate-400">Registra tus ventas de mostrador, WhatsApp o pedidos telefónicos. Las existencias se descuentan automáticamente del inventario.</p>
                 </div>
+                <div class="flex items-center gap-3">
+                    <a href="{{ route('merchant.pos.index') }}" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#F43F5E] to-[#6C28FE] text-white text-xs font-black shadow-lg shadow-[#F43F5E]/30 hover:opacity-95 transition flex items-center gap-2 cursor-pointer">
+                        <span>⚡</span>
+                        <span>Abrir Terminal POS Pantalla Completa (Lector USB + Multimoneda)</span>
+                    </a>
+                </div>
             </div>
 
             <!-- Terminal POS por Sucursal -->

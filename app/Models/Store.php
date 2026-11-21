@@ -29,6 +29,9 @@ class Store extends Model
         'status',
         'commission_rate',
         'rating',
+        'is_special_taxpayer',
+        'rif',
+        'bcv_rate',
     ];
 
     protected function casts(): array
@@ -37,6 +40,8 @@ class Store extends Model
             'status' => StoreStatus::class,
             'commission_rate' => 'decimal:2',
             'rating' => 'decimal:1',
+            'is_special_taxpayer' => 'boolean',
+            'bcv_rate' => 'decimal:4',
         ];
     }
 

@@ -26,6 +26,8 @@ class StoreBranch extends Model
         'base_delivery_fee',
         'avg_prep_time_minutes',
         'is_open',
+        'pos_enabled',
+        'invoice_printer_type',
     ];
 
     protected $hidden = [
@@ -41,6 +43,7 @@ class StoreBranch extends Model
             'base_delivery_fee' => 'decimal:2',
             'avg_prep_time_minutes' => 'integer',
             'is_open' => 'boolean',
+            'pos_enabled' => 'boolean',
         ];
     }
 
@@ -67,6 +70,16 @@ class StoreBranch extends Model
     public function sales(): HasMany
     {
         return $this->hasMany(StoreSale::class, 'branch_id');
+    }
+
+    public function cashRegisters(): HasMany
+    {
+        return $this->hasMany(CashRegister::class, 'store_branch_id');
+    }
+
+    public function inventoryMovements(): HasMany
+    {
+        return $this->hasMany(InventoryMovement::class, 'branch_id');
     }
 
     #[Scope]

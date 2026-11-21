@@ -7,6 +7,9 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DriverDashboardController;
 use App\Http\Controllers\MallController;
+use App\Http\Controllers\Merchant\CashShiftController;
+use App\Http\Controllers\Merchant\PosController;
+use App\Http\Controllers\Merchant\ThermalPrintController;
 use App\Http\Controllers\MerchantDashboardController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
@@ -92,6 +95,24 @@ Route::middleware(['auth', 'role:merchant_admin,merchant_staff,platform_admin'])
         // Registro de Ventas (Punto de Venta / POS / Mostrador)
         Route::post('/ventas', [MerchantDashboardController::class, 'storeSale'])->name('sales.store');
         Route::get('/ventas/{sale}', [MerchantDashboardController::class, 'showSale'])->name('sales.show');
+
+        // Módulo Punto de Venta (POS) Omnicanal JIHOVA
+        Route::prefix('pos')->name('pos.')->group(function (): void {
+            Route::get('/', [PosController::class, 'index'])->name('index');
+            Route::post('/ventas', [PosController::class, 'store'])->name('store');
+            Route::get('/pedidos-en-vivo', [PosController::class, 'liveOrders'])->name('live-orders');
+            Route::post('/sub-pedidos/{subOrder}/estado', [PosController::class, 'updateOrderStatus'])->name('order-status');
+
+            // Cajas y Arqueos (Corte X y Corte Z)
+            Route::post('/cajas/abrir', [CashShiftController::class, 'open'])->name('shifts.open');
+            Route::post('/cajas/turnos/{shift}/cerrar', [CashShiftController::class, 'close'])->name('shifts.close');
+            Route::get('/cajas/turnos/{shift}/corte-x', [CashShiftController::class, 'corteX'])->name('shifts.corte-x');
+            Route::get('/cajas/turnos/{shift}/corte-z', [CashShiftController::class, 'corteZ'])->name('shifts.corte-z');
+
+            // Impresión Térmica de Recibos y Comandas (80mm / 58mm)
+            Route::get('/imprimir/orden/{order}', [ThermalPrintController::class, 'receipt'])->name('print.receipt');
+            Route::get('/imprimir/comanda/{subOrder}', [ThermalPrintController::class, 'orderComanda'])->name('print.comanda');
+        });
     });
 
 // Panel de Repartidores / Delivery de la plataforma

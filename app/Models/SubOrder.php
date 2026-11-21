@@ -16,12 +16,16 @@ class SubOrder extends Model
     protected $fillable = [
         'order_id',
         'sub_order_code',
+        'channel',
         'branch_id',
         'driver_id',
         'status',
+        'payment_status',
         'subtotal',
         'delivery_fee',
         'commission_amount',
+        'igtf_amount',
+        'bcv_exchange_rate',
         'pickup_pin',
         'delivery_pin',
         'estimated_delivery_at',
@@ -35,6 +39,8 @@ class SubOrder extends Model
             'subtotal' => 'decimal:2',
             'delivery_fee' => 'decimal:2',
             'commission_amount' => 'decimal:2',
+            'igtf_amount' => 'decimal:2',
+            'bcv_exchange_rate' => 'decimal:4',
             'estimated_delivery_at' => 'datetime',
             'delivered_at' => 'datetime',
         ];
@@ -63,5 +69,15 @@ class SubOrder extends Model
     public function trackingEvents(): HasMany
     {
         return $this->hasMany(DeliveryTrackingEvent::class)->orderBy('event_timestamp');
+    }
+
+    public function paymentTransactions(): HasMany
+    {
+        return $this->hasMany(PaymentTransaction::class);
+    }
+
+    public function isPosSale(): bool
+    {
+        return $this->channel === 'pos_counter';
     }
 }

@@ -55,6 +55,11 @@ class User extends Authenticatable
         return $this->hasMany(SubOrder::class, 'driver_id');
     }
 
+    public function cashShifts(): HasMany
+    {
+        return $this->hasMany(CashShift::class, 'user_id');
+    }
+
     public function driverProfile(): HasOne
     {
         return $this->hasOne(DriverProfile::class, 'user_id');
