@@ -30,9 +30,12 @@ class PosController extends Controller
     {
         $user = $request->user();
 
-        // 1. Obtener tiendas del comerciante
+        // 1. Obtener tiendas del comerciante (Dueño o empleado asignado)
         $stores = Store::query()
-            ->when(! $user->isPlatformAdmin(), fn ($q) => $q->where('owner_id', $user->id))
+            ->when(! $user->isPlatformAdmin(), function ($q) use ($user) {
+                $q->where('owner_id', $user->id)
+                    ->orWhereHas('storeUsers', fn ($su) => $su->where('user_id', $user->id)->where('is_active', true));
+            })
             ->with(['branches.cashRegisters'])
             ->get();
 

@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->trustProxies(at: '*');
         $middleware->alias([
             'role' => EnsureUserHasRole::class,
+            'store.tenant' => \App\Http\Middleware\EnsureStoreAccess::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -124,9 +124,22 @@
                                 </div>
                                 <a href="{{ route('orders.index') }}" class="block px-3 py-2 rounded-xl text-sm text-slate-200 hover:bg-white/10 hover:text-white">Mis pedidos</a>
                                 <a href="{{ route('addresses.index') }}" class="block px-3 py-2 rounded-xl text-sm text-slate-200 hover:bg-white/10 hover:text-white">Mis direcciones</a>
+                                
+                                @if (auth()->user()->isMerchant() || auth()->user()->stores()->exists() || auth()->user()->storeMemberships()->exists() || auth()->user()->isPlatformAdmin())
+                                    <div class="py-1 border-t border-b border-white/10 my-1 space-y-0.5">
+                                        <a href="{{ route('merchant.dashboard') }}" class="flex items-center justify-between px-3 py-1.5 rounded-xl text-xs font-bold text-[#00F0FF] hover:bg-white/10 transition">
+                                            <span>🏪 Panel Mi Tienda</span>
+                                            <span class="text-[9px] px-1.5 py-0.5 rounded bg-[#00F0FF]/20">Aliado</span>
+                                        </a>
+                                        <a href="{{ route('merchant.pos.index') }}" class="flex items-center justify-between px-3 py-1.5 rounded-xl text-xs font-bold text-[#FF3366] hover:bg-white/10 transition">
+                                            <span>⚡ Punto de Venta (POS)</span>
+                                            <span class="text-[9px] px-1.5 py-0.5 rounded bg-[#FF3366]/20">Mostrador</span>
+                                        </a>
+                                    </div>
+                                @endif
+
                                 @if (auth()->user()->isPlatformAdmin())
-                                    <a href="{{ route('merchant.dashboard') }}" class="block px-3 py-2 rounded-xl text-sm text-slate-200 hover:bg-white/10 hover:text-white">Panel Comercios</a>
-                                    <a href="{{ route('driver.dashboard') }}" class="block px-3 py-2 rounded-xl text-sm text-slate-200 hover:bg-white/10 hover:text-white">Panel Repartidores</a>
+                                    <a href="{{ route('admin.dashboard') }}" class="block px-3 py-2 rounded-xl text-xs font-bold text-amber-400 hover:bg-white/10">🛡️ Panel Administrador Mall</a>
                                 @endif
                                 @if (app()->environment(['local', 'testing']))
                                     <div class="mt-1 pt-2 border-t border-white/10 space-y-1">

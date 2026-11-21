@@ -11,6 +11,7 @@ use App\Http\Controllers\Merchant\CashShiftController;
 use App\Http\Controllers\Merchant\PosController;
 use App\Http\Controllers\Merchant\ThermalPrintController;
 use App\Http\Controllers\MerchantDashboardController;
+use App\Http\Controllers\MerchantRegistrationController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,10 +42,18 @@ Route::middleware('guest')->group(function (): void {
     Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:login');
     Route::get('/registro', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/registro', [AuthController::class, 'register']);
+    Route::get('/registro-comercio', [MerchantRegistrationController::class, 'show'])->name('merchant.register.show');
+    Route::post('/registro-comercio', [MerchantRegistrationController::class, 'register'])->name('merchant.register.store');
 });
 
 Route::post('/demo-login', [AuthController::class, 'demoLogin'])->name('demo.login');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+
+// Redirecciones amigables a paneles
+Route::get('/merchant', fn () => redirect()->route('merchant.dashboard'));
+Route::get('/merchant/dashboard', fn () => redirect()->route('merchant.dashboard'));
+Route::get('/admin', fn () => redirect()->route('admin.dashboard'));
+Route::get('/admin/dashboard', fn () => redirect()->route('admin.dashboard'));
 
 // Rutas autenticadas de Cliente: Checkout, Pedidos y Direcciones
 Route::middleware('auth')->group(function (): void {
@@ -63,8 +72,8 @@ Route::middleware('auth')->group(function (): void {
     });
 });
 
-// Panel de Comerciantes / Tiendas
-Route::middleware(['auth', 'role:merchant_admin,merchant_staff,platform_admin'])
+// Panel de Comerciantes / Tiendas (Aislamiento Multi-Tenant)
+Route::middleware(['auth', 'role:merchant_admin,merchant_staff,platform_admin', 'store.tenant'])
     ->prefix('panel-tienda')
     ->name('merchant.')
     ->group(function (): void {

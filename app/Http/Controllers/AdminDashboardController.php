@@ -59,13 +59,25 @@ class AdminDashboardController extends Controller
     {
         $validated = $request->validate([
             'status' => ['required', Rule::enum(StoreStatus::class)],
+            'commission_rate' => ['nullable', 'numeric', 'min:0', 'max:100'],
+            'bcv_rate' => ['nullable', 'numeric', 'min:0.01'],
         ]);
 
-        $store->update([
+        $updateData = [
             'status' => StoreStatus::from($validated['status']),
-        ]);
+        ];
 
-        return back()->with('status', "Tienda {$store->business_name} actualizada a {$store->status->label()}.");
+        if (isset($validated['commission_rate'])) {
+            $updateData['commission_rate'] = (float) $validated['commission_rate'];
+        }
+
+        if (isset($validated['bcv_rate'])) {
+            $updateData['bcv_rate'] = (float) $validated['bcv_rate'];
+        }
+
+        $store->update($updateData);
+
+        return back()->with('status', "Tienda {$store->business_name} actualizada (Estado: {$store->status->label()}).");
     }
 
     public function assignDriver(Request $request, SubOrder $subOrder): RedirectResponse

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Store extends Model
@@ -32,6 +33,11 @@ class Store extends Model
         'is_special_taxpayer',
         'rif',
         'bcv_rate',
+        'legal_name',
+        'iva_condition',
+        'fiscal_address',
+        'seniat_invoice_correlative',
+        'seniat_control_correlative',
     ];
 
     protected function casts(): array
@@ -42,6 +48,8 @@ class Store extends Model
             'rating' => 'decimal:1',
             'is_special_taxpayer' => 'boolean',
             'bcv_rate' => 'decimal:4',
+            'seniat_invoice_correlative' => 'integer',
+            'seniat_control_correlative' => 'integer',
         ];
     }
 
@@ -73,6 +81,33 @@ class Store extends Model
     public function sales(): HasMany
     {
         return $this->hasMany(StoreSale::class);
+    }
+
+    public function storeUsers(): HasMany
+    {
+        return $this->hasMany(StoreUser::class);
+    }
+
+    public function staff(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'store_users')
+            ->withPivot(['role', 'store_branch_id', 'is_active'])
+            ->withTimestamps();
+    }
+
+    public function fiscalInvoices(): HasMany
+    {
+        return $this->hasMany(FiscalInvoice::class);
+    }
+
+    public function fiscalPurchases(): HasMany
+    {
+        return $this->hasMany(FiscalPurchase::class);
+    }
+
+    public function withholdingVouchers(): HasMany
+    {
+        return $this->hasMany(WithholdingVoucher::class);
     }
 
     #[Scope]

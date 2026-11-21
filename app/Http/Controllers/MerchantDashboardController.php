@@ -45,7 +45,10 @@ class MerchantDashboardController extends Controller
         $user = $request->user();
 
         $stores = Store::query()
-            ->when(! $user->isPlatformAdmin(), fn ($q) => $q->where('owner_id', $user->id))
+            ->when(! $user->isPlatformAdmin(), function ($q) use ($user) {
+                $q->where('owner_id', $user->id)
+                    ->orWhereHas('storeUsers', fn ($su) => $su->where('user_id', $user->id)->where('is_active', true));
+            })
             ->with([
                 'category',
                 'branches.inventory.product.category',
