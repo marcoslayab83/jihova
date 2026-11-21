@@ -57,11 +57,10 @@
     <header class="sticky top-0 z-40 bg-[#0B0E17]/85 backdrop-blur-2xl border-b border-white/10 shadow-[0_12px_32px_-16px_rgba(0,0,0,0.85)]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="h-18 flex items-center justify-between gap-4 py-2.5">
-                <!-- Logo y Ubicación -->
-                <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
+                <!-- Logo Oficial JIHOVA -->
+                <div class="flex items-center gap-3 sm:gap-4 min-w-0">
                     <a href="{{ route('mall.home') }}" class="flex items-center shrink-0 group transition hover:opacity-95">
-                        <x-brand-logo size="md" subtitle="El Centro Comercial Online" class="hidden sm:inline-flex" />
-                        <x-brand-logo size="sm" :show-text="true" class="sm:hidden" />
+                        <x-brand-logo size="md" subtitle="El Centro Comercial Online" />
                     </a>
 
                     <button type="button" data-open-location-modal class="hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#121728] border border-white/10 hover:border-[#00F0FF]/50 text-xs font-medium text-slate-200 transition max-w-[240px] cursor-pointer">
@@ -69,15 +68,9 @@
                         <span class="truncate">{{ $sharedLocation['label'] ?? 'Seleccionar ubicación' }}</span>
                         <span class="text-slate-400">▾</span>
                     </button>
-
-                    <button type="button" data-open-location-modal class="flex md:hidden items-center gap-1 px-2.5 py-1 rounded-full bg-[#121728] border border-white/15 text-[11px] font-medium text-slate-200 transition max-w-[140px] cursor-pointer">
-                        <span class="text-[#00F0FF] shrink-0 text-xs">📍</span>
-                        <span class="truncate">{{ $sharedLocation['label'] ?? 'Ubicación' }}</span>
-                        <span class="text-slate-400 text-[9px]">▾</span>
-                    </button>
                 </div>
 
-                <!-- Buscador Global -->
+                <!-- Buscador Global Desktop -->
                 <form action="{{ route('mall.explore') }}" method="GET" class="flex-1 max-w-xl hidden lg:flex items-center relative">
                     <input
                         type="search"
@@ -100,15 +93,15 @@
                     @auth
                         @if (auth()->user()->isMerchant())
                             <a href="{{ route('merchant.dashboard') }}" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-bold bg-[#6C28FE]/20 border border-[#6C28FE]/45 text-violet-200 hover:bg-[#6C28FE]/35 transition">
-                                🏪 Mi Tienda
+                                🏪 <span class="hidden sm:inline">Mi Tienda</span>
                             </a>
                         @elseif (auth()->user()->isDriver())
                             <a href="{{ route('driver.dashboard') }}" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-bold bg-[#00F0FF]/15 border border-[#00F0FF]/40 text-[#00F0FF] hover:bg-[#00F0FF]/25 transition">
-                                🛵 Panel Delivery
+                                🛵 <span class="hidden sm:inline">Panel Delivery</span>
                             </a>
                         @elseif (auth()->user()->isPlatformAdmin())
                             <a href="{{ route('admin.dashboard') }}" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-[#6C28FE]/30 to-[#00F0FF]/20 border border-[#00F0FF]/40 text-white hover:border-[#00F0FF] transition">
-                                🛡️ Admin Mall
+                                🛡️ <span class="hidden sm:inline">Admin</span>
                             </a>
                         @endif
 
@@ -163,7 +156,7 @@
                             </div>
                         </div>
                     @else
-                        <a href="{{ route('login') }}" class="inline-flex px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-200 hover:text-[#00F0FF] hover:bg-white/5 transition">
+                        <a href="{{ route('login') }}" class="inline-flex px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-200 hover:text-[#00F0FF] hover:bg-white/5 transition">
                             Ingresar
                         </a>
                         <a href="{{ route('register') }}" class="hidden sm:inline-flex px-4 py-2 rounded-xl text-sm font-bold bg-[#6C28FE] hover:bg-[#7d42ff] text-white shadow-md shadow-[#6C28FE]/30 transition">
@@ -171,28 +164,16 @@
                         </a>
                     @endauth
 
-                    <!-- Botón Carrito -->
-                    <button type="button" data-open-cart class="relative inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#FF3366] hover:bg-[#ff4d7a] text-white text-sm font-bold shadow-lg shadow-[#FF3366]/30 transition cursor-pointer">
+                    <!-- Botón Carrito Desktop (En móvil se usa la barra flotante inferior) -->
+                    <button type="button" data-open-cart class="hidden sm:inline-flex relative items-center gap-2 px-3.5 py-2 rounded-xl bg-[#FF3366] hover:bg-[#ff4d7a] text-white text-sm font-bold shadow-lg shadow-[#FF3366]/30 transition cursor-pointer">
                         <span>🛒</span>
-                        <span class="hidden sm:inline">Carrito</span>
+                        <span>Carrito</span>
                         <span data-cart-badge class="px-1.5 py-0.5 rounded-full bg-[#0B0E17] text-[#00F0FF] text-xs font-extrabold leading-none border border-[#00F0FF]/40 {{ ($sharedCartCount ?? 0) > 0 ? '' : 'hidden' }}">
                             {{ $sharedCartCount ?? 0 }}
                         </span>
                     </button>
                 </div>
             </div>
-
-            <!-- Buscador móvil -->
-            <form action="{{ route('mall.explore') }}" method="GET" class="pb-3 lg:hidden flex gap-2">
-                <input
-                    type="search"
-                    name="q"
-                    value="{{ request('q') }}"
-                    placeholder="Buscar desayuno, zapatos, tiendas..."
-                    class="flex-1 px-4 py-2 rounded-full bg-[#121728] border border-white/15 text-sm text-[#F3F4F6] placeholder:text-slate-400 focus:outline-none focus:border-[#00F0FF]"
-                >
-                <button type="submit" class="px-4 py-2 rounded-full bg-[#FF3366] text-white text-xs font-bold">Ir</button>
-            </form>
         </div>
     </header>
 
@@ -257,27 +238,27 @@
     </footer>
 
     <!-- Barra Inferior App Móvil (Estilo Dock Flotante con Glassmorphism) -->
-    <nav class="md:hidden fixed bottom-2.5 inset-x-3 z-40 bg-[#0E1322]/90 backdrop-blur-2xl border border-white/15 rounded-3xl px-1.5 py-1.5 shadow-[0_14px_40px_rgba(0,0,0,0.85)] flex items-center justify-around text-[10px] font-bold text-slate-300">
-        <a href="{{ route('mall.home') }}" class="flex flex-col items-center gap-0.5 px-2.5 py-1 rounded-2xl transition {{ request()->routeIs('mall.home') ? 'text-[#00F0FF] bg-[#00F0FF]/15' : 'hover:text-white' }}">
+    <nav class="md:hidden fixed bottom-2.5 inset-x-3 z-40 bg-[#0E1322]/90 backdrop-blur-2xl border border-white/15 rounded-3xl px-1.5 py-1.5 shadow-[0_14px_40px_rgba(0,0,0,0.85)] flex items-center justify-around text-[10px] font-bold text-[#94A3B8]">
+        <a href="{{ route('mall.home') }}" class="flex flex-col items-center gap-0.5 px-2.5 py-1 rounded-2xl transition {{ request()->routeIs('mall.home') ? 'text-[#00F0FF] bg-[#00F0FF]/15' : 'text-[#94A3B8] hover:text-white' }}">
             <span class="text-base">🏠</span>
             <span>Inicio</span>
         </a>
-        <a href="{{ route('mall.explore') }}" class="flex flex-col items-center gap-0.5 px-2.5 py-1 rounded-2xl transition {{ request()->routeIs('mall.explore') ? 'text-[#00F0FF] bg-[#00F0FF]/15' : 'hover:text-white' }}">
+        <a href="{{ route('mall.explore') }}" class="flex flex-col items-center gap-0.5 px-2.5 py-1 rounded-2xl transition {{ request()->routeIs('mall.explore') ? 'text-[#00F0FF] bg-[#00F0FF]/15' : 'text-[#94A3B8] hover:text-white' }}">
             <span class="text-base">🧭</span>
             <span>Explorar</span>
         </a>
-        <a href="{{ route('mall.stores') }}" class="flex flex-col items-center gap-0.5 px-2.5 py-1 rounded-2xl transition {{ request()->routeIs('mall.stores*') ? 'text-[#00F0FF] bg-[#00F0FF]/15' : 'hover:text-white' }}">
+        <a href="{{ route('mall.stores') }}" class="flex flex-col items-center gap-0.5 px-2.5 py-1 rounded-2xl transition {{ request()->routeIs('mall.stores*') ? 'text-[#00F0FF] bg-[#00F0FF]/15' : 'text-[#94A3B8] hover:text-white' }}">
             <span class="text-base">🏬</span>
             <span>Tiendas</span>
         </a>
-        <a href="{{ auth()->check() ? route('orders.index') : route('login') }}" class="flex flex-col items-center gap-0.5 px-2.5 py-1 rounded-2xl transition {{ request()->routeIs('orders.*') ? 'text-[#00F0FF] bg-[#00F0FF]/15' : 'hover:text-white' }}">
+        <a href="{{ auth()->check() ? route('orders.index') : route('login') }}" class="flex flex-col items-center gap-0.5 px-2.5 py-1 rounded-2xl transition {{ request()->routeIs('orders.*') ? 'text-[#00F0FF] bg-[#00F0FF]/15' : 'text-[#94A3B8] hover:text-white' }}">
             <span class="text-base">📦</span>
             <span>{{ auth()->check() ? 'Pedidos' : 'Cuenta' }}</span>
         </a>
-        <button type="button" data-open-cart class="relative flex flex-col items-center gap-0.5 px-2.5 py-1 rounded-2xl text-[#FF3366] hover:bg-[#FF3366]/15 transition cursor-pointer">
+        <button type="button" data-open-cart class="relative flex flex-col items-center gap-0.5 px-2.5 py-1 rounded-2xl text-[#94A3B8] hover:text-white transition cursor-pointer {{ request()->routeIs('cart.*') ? 'text-[#00F0FF] bg-[#00F0FF]/15' : '' }}">
             <span class="text-base relative">
                 🛒
-                <span data-cart-badge class="absolute -top-1 -right-2 px-1.5 py-0.2 rounded-full bg-[#FF3366] text-white text-[9px] font-extrabold leading-tight shadow-sm {{ ($sharedCartCount ?? 0) > 0 ? '' : 'hidden' }}">
+                <span data-cart-badge class="absolute -top-1 -right-2 px-1.5 py-0.5 rounded-full bg-[#F43F5E] text-white text-[9px] font-extrabold leading-tight shadow-md shadow-[#F43F5E]/40 animate-pulse {{ ($sharedCartCount ?? 0) > 0 ? '' : 'hidden' }}">
                     {{ $sharedCartCount ?? 0 }}
                 </span>
             </span>

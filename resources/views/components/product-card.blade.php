@@ -1,5 +1,6 @@
 @props([
     'offer',
+    'theme' => 'dark',
 ])
 
 @php
@@ -10,62 +11,63 @@
     $isOpen = (bool) $branch->is_open;
     $inStock = (int) $offer['stock'] > 0;
     $priceBs = number_format($offer['price'] * 2000, 0, ',', '.');
+    $isLight = $theme === 'light';
 @endphp
 
-<article class="group bg-[#121728]/95 backdrop-blur-md rounded-2xl sm:rounded-3xl border border-white/10 overflow-hidden shadow-lg hover:shadow-[0_18px_42px_-16px_rgba(0,240,255,0.28)] hover:-translate-y-1 hover:border-[#00F0FF]/55 transition-all duration-300 flex flex-col">
+<article class="group {{ $isLight ? 'bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_-12px_rgba(108,40,254,0.18)] hover:-translate-y-1 hover:border-[#6C28FE]/50' : 'bg-[#121728]/95 backdrop-blur-md rounded-2xl sm:rounded-3xl border border-white/10 shadow-lg hover:shadow-[0_18px_42px_-16px_rgba(0,240,255,0.28)] hover:-translate-y-1 hover:border-[#00F0FF]/55' }} overflow-hidden transition-all duration-300 flex flex-col">
     <div class="p-2 sm:p-2.5 pb-0">
-        <a href="{{ route('mall.products.show', [$store, $product]) }}" class="relative block aspect-[4/3] rounded-xl sm:rounded-2xl bg-[#171E33] overflow-hidden border border-white/10">
+        <a href="{{ route('mall.products.show', [$store, $product]) }}" class="relative block aspect-[4/3] rounded-xl sm:rounded-2xl {{ $isLight ? 'bg-slate-100 border border-slate-200/70' : 'bg-[#171E33] border border-white/10' }} overflow-hidden">
             <img
                 src="{{ $product->image_url ?? '/images/catalog/moda.jpg' }}"
                 alt="{{ $product->name }}"
                 class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
                 loading="lazy"
             >
-            <div class="absolute inset-0 bg-gradient-to-t from-[#0B0E17]/80 via-transparent to-transparent opacity-70 group-hover:opacity-85 transition"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent opacity-60 group-hover:opacity-75 transition"></div>
 
             @if ($product->badge)
-                <span class="absolute top-1.5 left-1.5 sm:top-2.5 sm:left-2.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#0B0E17]/85 backdrop-blur-md border border-[#6C28FE]/50 text-white text-[9px] sm:text-[10px] font-bold tracking-wide shadow-sm truncate max-w-[85%]">
+                <span class="absolute top-1.5 left-1.5 sm:top-2.5 sm:left-2.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-slate-900/90 backdrop-blur-md border border-[#6C28FE]/50 text-white text-[9px] sm:text-[10px] font-bold tracking-wide shadow-sm truncate max-w-[85%]">
                     ✦ {{ $product->badge }}
                 </span>
             @endif
 
-            <span class="absolute bottom-1.5 left-1.5 sm:bottom-2.5 sm:left-2.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#0B0E17]/85 backdrop-blur-md border border-[#00F0FF]/35 text-[#00F0FF] text-[9px] sm:text-[10px] font-bold">
+            <span class="absolute bottom-1.5 left-1.5 sm:bottom-2.5 sm:left-2.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-slate-900/90 backdrop-blur-md border border-[#00F0FF]/35 text-[#00F0FF] text-[9px] sm:text-[10px] font-bold">
                 ⏱️ {{ $offer['eta_minutes'] }}m
             </span>
 
             @if ($product->prep_note)
-                <span class="hidden sm:inline-block absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded-full bg-[#6C28FE]/80 backdrop-blur-md text-white text-[10px] font-semibold">
+                <span class="hidden sm:inline-block absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded-full bg-[#6C28FE]/85 backdrop-blur-md text-white text-[10px] font-semibold">
                     {{ $product->prep_note }}
                 </span>
             @endif
         </a>
     </div>
 
-    <div class="p-2.5 sm:p-4 flex-1 flex flex-col justify-between gap-2 sm:gap-3">
+    <div class="p-2.5 sm:p-4 flex-1 flex flex-col justify-between gap-2 sm:gap-3 {{ $isLight ? 'bg-white' : '' }}">
         <div class="space-y-1">
             <div class="flex items-center justify-between gap-1 text-[10px] sm:text-[11px] font-semibold">
-                <a href="{{ route('mall.stores.show', $store) }}" class="text-[#00F0FF] hover:text-white truncate flex items-center gap-1 transition">
-                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full shrink-0 ring-2 ring-white/20" style="background-color: {{ $store->accent_color ?? '#00F0FF' }};"></span>
+                <a href="{{ route('mall.stores.show', $store) }}" class="{{ $isLight ? 'text-[#6C28FE] hover:text-[#0284C7]' : 'text-[#00F0FF] hover:text-white' }} truncate flex items-center gap-1 transition">
+                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full shrink-0 ring-2 {{ $isLight ? 'ring-slate-200' : 'ring-white/20' }}" style="background-color: {{ $store->accent_color ?? '#6C28FE' }};"></span>
                     <span class="truncate">{{ $store->business_name }}</span>
                 </a>
                 @if ($category)
-                    <span class="hidden sm:inline-block px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-slate-300 shrink-0 text-[10px]">{{ $category->name }}</span>
+                    <span class="hidden sm:inline-block px-2 py-0.5 rounded-full {{ $isLight ? 'bg-slate-100 border border-slate-200 text-slate-600' : 'bg-white/5 border border-white/10 text-slate-300' }} shrink-0 text-[10px]">{{ $category->name }}</span>
                 @endif
             </div>
 
             <a href="{{ route('mall.products.show', [$store, $product]) }}" class="block">
-                <h3 class="font-display font-bold text-[#F3F4F6] text-xs sm:text-base leading-snug line-clamp-2 group-hover:text-[#00F0FF] transition">
+                <h3 class="font-display font-bold {{ $isLight ? 'text-slate-900 group-hover:text-[#6C28FE]' : 'text-[#F3F4F6] group-hover:text-[#00F0FF]' }} text-xs sm:text-base leading-snug line-clamp-2 transition">
                     {{ $product->name }}
                 </h3>
             </a>
 
-            <p class="hidden sm:block text-xs text-slate-400 line-clamp-2">{{ $product->description }}</p>
+            <p class="hidden sm:block text-xs {{ $isLight ? 'text-slate-500' : 'text-slate-400' }} line-clamp-2">{{ $product->description }}</p>
         </div>
 
-        <div class="pt-2 sm:pt-3 border-t border-white/10 flex items-center justify-between gap-1.5">
+        <div class="pt-2 sm:pt-3 {{ $isLight ? 'border-t border-slate-100' : 'border-t border-white/10' }} flex items-center justify-between gap-1.5">
             <div>
-                <span class="block text-base sm:text-xl font-black text-white tracking-tight">${{ number_format($offer['price'], 2) }}</span>
-                <span class="block text-[10px] sm:text-[11px] font-bold text-[#00F0FF]">
+                <span class="block text-base sm:text-xl font-black {{ $isLight ? 'text-slate-900' : 'text-white' }} tracking-tight">${{ number_format($offer['price'], 2) }}</span>
+                <span class="block text-[10px] sm:text-[11px] font-bold {{ $isLight ? 'text-[#0284C7]' : 'text-[#00F0FF]' }}">
                     Bs. {{ $priceBs }}
                 </span>
             </div>
@@ -81,7 +83,7 @@
                     </button>
                 </form>
             @else
-                <span class="px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl bg-white/5 border border-white/10 text-slate-400 text-[10px] sm:text-xs font-semibold">
+                <span class="px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl {{ $isLight ? 'bg-slate-100 border border-slate-200 text-slate-500' : 'bg-white/5 border border-white/10 text-slate-400' }} text-[10px] sm:text-xs font-semibold">
                     {{ $isOpen ? 'Agotado' : 'Cerrado' }}
                 </span>
             @endif

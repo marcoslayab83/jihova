@@ -7,18 +7,18 @@
 @php
     $uid = uniqid('jh_');
     $iconDimensions = match ($size) {
-        'sm' => 'w-9 h-7',
-        'lg' => 'w-14 h-11',
-        default => 'w-11 h-8',
+        'sm' => 'w-8 h-6 sm:w-9 sm:h-7',
+        'lg' => 'w-12 h-9 sm:w-14 sm:h-11',
+        default => 'w-9 h-7 sm:w-11 sm:h-8',
     };
     $wordmarkClass = match ($size) {
-        'sm' => 'text-base',
-        'lg' => 'text-2xl',
-        default => 'text-lg',
+        'sm' => 'text-sm sm:text-base',
+        'lg' => 'text-xl sm:text-2xl',
+        default => 'text-base sm:text-lg',
     };
 @endphp
 
-<span {{ $attributes->merge(['class' => 'inline-flex items-center gap-2.5 select-none']) }}>
+<span {{ $attributes->merge(['class' => 'inline-flex items-center gap-2 sm:gap-2.5 select-none']) }}>
     <svg viewBox="0 0 88 56" fill="none" xmlns="http://www.w3.org/2000/svg" class="{{ $iconDimensions }} shrink-0 drop-shadow-[0_0_12px_rgba(0,240,255,0.35)]" aria-hidden="true">
         <defs>
             <linearGradient id="{{ $uid }}_cv" x1="6" y1="28" x2="82" y2="28" gradientUnits="userSpaceOnUse">
@@ -54,7 +54,7 @@
                 JIHOVA
             </span>
             @if ($subtitle)
-                <span class="block text-[10px] font-medium tracking-wide text-slate-400 truncate mt-0.5">
+                <span class="hidden sm:block text-[10px] font-medium tracking-wide text-slate-400 truncate mt-0.5">
                     {{ $subtitle }}
                 </span>
             @endif

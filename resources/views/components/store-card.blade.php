@@ -1,5 +1,6 @@
 @props([
     'item',
+    'theme' => 'dark',
 ])
 
 @php
@@ -14,16 +15,17 @@
         'supermercado-hogar' => '/images/catalog/supermercado.jpg',
     ];
     $coverUrl = $store->banner_url ?? ($coverMap[$store->category?->slug] ?? '/images/catalog/hero-mall.jpg');
+    $isLight = $theme === 'light';
 @endphp
 
-<a href="{{ route('mall.stores.show', $store) }}" class="group block w-full min-w-[260px] sm:min-w-0 shrink-0 sm:shrink bg-[#121728]/95 backdrop-blur-md rounded-2xl sm:rounded-3xl border border-white/10 overflow-hidden shadow-lg hover:shadow-[0_18px_42px_-16px_rgba(108,40,254,0.45)] hover:-translate-y-1 hover:border-[#6C28FE]/70 transition-all duration-300">
+<a href="{{ route('mall.stores.show', $store) }}" class="group block w-full min-w-[260px] sm:min-w-0 shrink-0 sm:shrink {{ $isLight ? 'bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_-12px_rgba(108,40,254,0.18)] hover:-translate-y-1 hover:border-[#6C28FE]/50' : 'bg-[#121728]/95 backdrop-blur-md rounded-2xl sm:rounded-3xl border border-white/10 shadow-lg hover:shadow-[0_18px_42px_-16px_rgba(108,40,254,0.45)] hover:-translate-y-1 hover:border-[#6C28FE]/70' }} overflow-hidden transition-all duration-300">
     <div class="h-32 sm:h-36 relative overflow-hidden">
         <img
             src="{{ $coverUrl }}"
             alt="{{ $store->business_name }}"
             class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
         >
-        <div class="absolute inset-0 bg-gradient-to-t from-[#0B0E17] via-[#0B0E17]/45 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/45 to-transparent"></div>
 
         <div class="absolute top-3 right-3 flex items-center gap-1.5">
             <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#0B0E17]/85 backdrop-blur border border-white/15 text-amber-300 shadow-sm">
@@ -60,15 +62,15 @@
         </div>
     </div>
 
-    <div class="p-4 space-y-3">
-        <p class="text-xs text-slate-400 line-clamp-2 min-h-[2rem]">
+    <div class="p-4 space-y-3 {{ $isLight ? 'bg-white' : '' }}">
+        <p class="text-xs {{ $isLight ? 'text-slate-500' : 'text-slate-400' }} line-clamp-2 min-h-[2rem]">
             {{ $store->tagline ?? $store->description }}
         </p>
 
         @if ($branch)
-            <div class="pt-2.5 border-t border-white/10 flex items-center justify-between text-xs text-slate-300">
-                <span class="inline-flex items-center gap-1 font-medium text-[#00F0FF]">⏱️ {{ $item['eta_minutes'] }} min · {{ number_format((float) $item['distance_km'], 1) }} km</span>
-                <span class="font-bold text-white bg-white/5 border border-white/10 px-2.5 py-1 rounded-full">Envío ${{ number_format((float) $item['delivery_fee'], 2) }}</span>
+            <div class="pt-2.5 {{ $isLight ? 'border-t border-slate-100 text-slate-600' : 'border-t border-white/10 text-slate-300' }} flex items-center justify-between text-xs">
+                <span class="inline-flex items-center gap-1 font-semibold {{ $isLight ? 'text-[#6C28FE]' : 'text-[#00F0FF]' }}">⏱️ {{ $item['eta_minutes'] }} min · {{ number_format((float) $item['distance_km'], 1) }} km</span>
+                <span class="font-bold {{ $isLight ? 'text-slate-800 bg-slate-100 border border-slate-200' : 'text-white bg-white/5 border border-white/10' }} px-2.5 py-1 rounded-full">Envío ${{ number_format((float) $item['delivery_fee'], 2) }}</span>
             </div>
         @endif
     </div>
